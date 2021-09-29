@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load cropping %}
+{% load tour_tag %}
+{% block main_body %}
+    {% include "cms/cms_bar.html" %}
+    <section>
+        <div class="content-wrap">
+            <div class="container">
+                <!-- 價格說明 -->
+                <div class="section topmargin-sm p-4">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>商品名稱</th>
+                                    <th>狀態</th>
+                                    <th>編輯</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>宜蘭童話仙境１天、６人成行～明池森林、蕨園神木迷宮步道、清水地熱</td>
+                                    <td>已經截止</td>
+                                    <td>
+                                        <a href="#" class="button button-rounded ">編輯</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- #content end -->
+
+{% endblock %}
+{% block footer_script %}
+
+{% endblock %}

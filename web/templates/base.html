@@ -23,6 +23,7 @@
 
     <link rel="stylesheet" href="{% static 'css/fonts.css' %}" type="text/css"/>
 
+    <link rel="stylesheet" href="{% static 'css/components/radio-checkbox.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}" type="text/css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
@@ -30,6 +31,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'include/rs-plugin/css/settings.css' %}" media="screen"/>
     <link rel="stylesheet" type="text/css" href="{% static 'include/rs-plugin/css/layers.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'include/rs-plugin/css/navigation.css' %}">
+    <!-- select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     {% block header_css %}
     {% endblock %}
     <!-- Document Title
@@ -266,7 +270,8 @@
 ============================================= -->
 <script src="{% static 'js/jquery.js' %}"></script>
 <script src="{% static 'js/plugins.js' %}"></script>
-
+<!-- select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <!-- Footer Scripts
 ============================================= -->
 <script src="{% static 'js/functions.js' %}"></script>

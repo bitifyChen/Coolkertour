@@ -1,0 +1,354 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load cropping %}
+{% load tour_tag %}
+{% block main_body %}
+    {% include "cms/cms_bar.html" %}
+    <section id="app">
+        <div class="container">
+            <form>
+                <!----------------------------行程資料---------------------------->
+                <h3>行程資料</h3>
+                <div class="form-group row">
+                    <label for="itemName" class="col-sm-2 col-form-label">行程名稱</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="itemName" placeholder="請輸入行程名稱">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="itemInclude" class="col-sm-2 col-form-label">團費包含</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="6" id="itemInclude"
+                                  placeholder="1、【交通】車資及過路費用。&#13;&#10;2、【活動】表列行程。&#13;&#10;3、【餐食】表列行程。&#13;&#10;4、【保險】新台幣200萬旅行業責任意外險附加20萬意外醫療險。&#13;&#10;5、【其他】每人一瓶礦泉水、司機小費。"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="itemNotInclude" class="col-sm-2 col-form-label">團費不包含</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="6" id="itemNotInclude"
+                                  placeholder="1、個人因素所產生之消費，如飲料、私人購物費…等。&#13;&#10;2、個人旅遊平安保險，依規定旅客若有個別需求，得自行投保旅行平安保險。&#13;&#10;3、本行程表上未註明之各項開銷，建議、自費或自由行程所衍生之任何費用。"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="itemInfo" class="col-sm-2 col-form-label">行程特色</label>
+                    <div class="col-sm-12">
+                        <textarea name="itemInfo"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="itemRemark" class="col-sm-2 col-form-label">出團備註</label>
+                    <div class="col-sm-12">
+                        <textarea name="itemRemark"></textarea>
+                    </div>
+                </div>
+                <div class="line"></div>
+
+                <!----------------------------行程組件---------------------------->
+                <h3>行程組件</h3>
+                <div id="daysBox">
+                    <div class="day-box section p-4">
+                        <div class="day-title">
+                            <div class="day-num">
+                                1
+                            </div>
+                            <div class="day-trips">
+                                <span class="day-trip">台北集合出發</span>
+                                <span class="day-trip">明池森林遊樂區</span>
+                                <span class="day-trip">清水地熱公園</span>
+                                <span class="day-trip">翰品酒店</span>
+                            </div>
+                        </div>
+                        <div class="day-body">
+                            <div class="day-trip">
+                                <div class="day-trip-img">
+                                    <img src="https://work.bwt.com.tw/travel/GetImg.ashx?F=173610b3-a6ec-4c88-91db-8479f8032e3a&amp;i=4efb"
+                                         class="img-fluid" style="width: 100%">
+                                </div>
+                                <div class="day-trip-info">
+                                    <div class="title">
+                                        明池森林遊樂區
+                                    </div>
+                                    <div class="content">
+                                        明池又名「池端」是一個高山人工湖泊，四周原始森林密佈，終年煙嵐繚繞景色迷濛曼妙，有「北橫明珠」的美譽。明池森林遊樂區內以庭園山水的概念，設計出具有古代風格的建築景觀，另有明池苗圃、苔園、蕨園、森林步道、國父誕辰紀念林園等，且於山坡步道兩旁設有梯形株苗種育培養區，沿著斜坡步道而行，可眺望高山野地美景及細賞各式花卉的自然風貌。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-footer">
+                            <div class="day-trip-notice">
+                                <div class="fancy-title title-bottom-border title-center">
+                                    <h4><i class="icon-line-bell"></i>注意事項</h4>
+                                </div>
+                                <ul>
+                                    <li>下車參觀：太魯閣國家公園、花蓮台泥DAKA星巴克和平門市</li>
+                                    <li>08:00～08:10 台北車站南一門集合出發、帶著愉快的心情開啟宜花之旅<br>
+                                        10:00~11:00 台泥DAKA<br>
+                                        12:00~16:00 太魯閣國家公園<br>
+                                        17:30 飯店CHECK IN<br>
+                                        （途中將依實際狀況調整景點停留時間）
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <div class="day-trip-dining">
+                                <div class="fancy-title title-bottom-border title-center">
+                                    <h4><i class="icon-food2"></i>住宿與用餐</h4>
+                                </div>
+                                <div class="dining-boxs">
+                                    <div class="dining-box">
+                                        <div class="dining-title">
+                                            <i class="fas fa-hamburger fa-fw" aria-hidden="true"></i>早餐：
+                                        </div>
+                                        <div class="dining-content">
+                                            敬請自理
+                                        </div>
+                                    </div>
+
+                                    <div class="dining-box">
+                                        <div class="dining-title">
+                                            <i class="fas fa-utensils fa-fw" aria-hidden="true"></i>中餐：
+                                        </div>
+                                        <div class="dining-content">
+                                            營養健康餐盒
+                                        </div>
+                                    </div>
+                                    <div class="dining-box">
+                                        <div class="dining-title">
+                                            <i class="fas fa-wine-glass-alt fa-fw" aria-hidden="true"></i>晚餐：
+                                        </div>
+                                        <div class="dining-content">
+                                            飯店用餐
+                                        </div>
+                                    </div>
+                                    <div class="dining-box">
+                                        <div class="dining-title">
+                                            <i class="fas fa-bed fa-fw" aria-hidden="true"></i>住宿：
+                                        </div>
+                                        <div class="dining-content">
+                                            松風文旅／煙波大飯店宜蘭館／ 或同級
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------------------------組件modal-------------------->
+                <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
+                     aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-body">
+                            <div class="modal-content border-0" style="background-color: white;">
+                                <!-------------------------------------------表單內容--------------------------------------->
+                                <div class="modal-body">
+                                    <h3 class="mb-1"><span class="badge badge-pill badge-success">行程</span></h3>
+                                    <select class="form-control js-example-basic-single" name="state"
+                                            id="scheduleSearch"></select>
+                                    <button class="btn btn-secondary col-sm-2" type="button" @click="scheduleAdd">
+                                        加入
+                                    </button>
+
+                                    <div class="alert alert-info mb-1" v-for="(daySchedule,index) in dayScheduleList">
+										<input :id="index" class="radio-style" name="radio-group-3" type="checkbox" v-model="daySchedule.show">
+										<label :for="index" class="radio-style-3-label" style="color:white">[[ daySchedule.name ]]</label>
+                                        <button type="button" class="close" @click="scheduleDel(daySchedule.id)">x
+                                        </button>
+                                        <div>
+                                        </div>
+                                    </div>
+
+
+                                    <h3 class="mb-1"><span class="badge badge-pill badge-success">備註</span></h3>
+                                    <div class="form-group row">
+                                        <label for="dayRemark" class="col-sm-2 col-form-label">備註</label>
+                                        <div class="col-sm-10">
+                                            <textarea v-model="dayRemark" class="form-control" rows="4" id="dayRemark"
+                                                      placeholder="08:00～08:10 台北車站南一門集合出發、帶著愉快的心情開啟宜花之旅&#13;&#10;10:00~11:00 台泥DAKA&#13;&#10;12:00~16:00 太魯閣國家公園&#13;&#10;17:30 飯店CHECK IN&#13;&#10;（途中將依實際狀況調整景點停留時間）"></textarea>
+                                        </div>
+                                    </div>
+                                    <h3 class="mb-1"><span class="badge badge-pill badge-success">用餐</span></h3>
+
+                                    <div class="form-group row">
+                                        <label for="dayBreakfast" class="col-sm-2 col-form-label">早餐</label>
+                                        <div class="col-sm-10">
+                                            <input v-model="dayDining.breakfast" type="text" class="form-control"
+                                                   id="dayBreakfast">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="dayLunch" class="col-sm-2 col-form-label">中餐</label>
+                                        <div class="col-sm-10">
+                                            <input v-model="dayDining.lunch" type="text" class="form-control"
+                                                   id="dayLunch">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="dayDinner" class="col-sm-2 col-form-label">晚餐</label>
+                                        <div class="col-sm-10">
+                                            <input v-model="dayDining.dinner" type="text" class="form-control"
+                                                   id="dayDinner">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="dayHotel" class="col-sm-2 col-form-label">住宿</label>
+                                        <div class="col-sm-10">
+                                            <input v-model="dayDining.hotel" type="text" class="form-control"
+                                                   id="dayHotel"
+                                                   placeholder="松風文旅／煙波大飯店宜蘭館／ 或同級">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-------------------------------------------表單內容--------------------------------------->
+                                <div class="modal-footer border-top-0">
+                                    <button type="button" class="button button-3d button-pink button-rounded"
+                                            data-dismiss="modal" aria-hidden="true"><i class="icon-trash2"></i>取消
+                                    </button>
+                                    <button type="button" class="button button-3d button-rounded"><i
+                                            class="icon-ok"></i>確認新增
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------------------------組件modal-------------------->
+                <div class="button button-3d button-rounded w-100 center" data-toggle="modal"
+                     data-target=".bs-example-modal-lg"><i class="icon-map-marker2"></i>新增一天行程
+                </div>
+                <div class="line"></div>
+                <!----------------------------行程金額---------------------------->
+                <h3>出團日期與金額</h3>
+                <h4 class="mb-1"><span class="badge badge-pill badge-success">相關日期設定</span></h4>
+                <div class="form-group row">
+                    <label for="itemListingDate" class="col col-form-label">上架日期</label>
+                    <div class="col">
+                        <input type="date" class="form-control" id="itemListingDate">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="itemDeadlineDate" class="col col-form-label">截止日期</label>
+                    <div class="col">
+                        <input type="date" class="form-control" id="itemDeadlineDate">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="itemDate" class="col col-form-label">出團日期</label>
+                    <div class="col">
+                        <input type="date" class="form-control" id="itemDate">
+                    </div>
+                </div>
+                <h4 class="mb-1"><span class="badge badge-pill badge-success">房型金額設定</span></h4>
+                <div class="form-group row">
+                    <label for="itemPrice1" class="col col-form-label">大人（單人房）</label>
+                    <div class="col">
+                        <input type="number" class="form-control" id="itemPrice1" placeholder="請填寫金額，如未有此房型請留空。">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="itemPrice1" class="col col-form-label">大人（雙人房）</label>
+                    <div class="col">
+                        <input type="number" class="form-control" id="itemPrice1" placeholder="請填寫金額，如未有此房型請留空。">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="itemPrice1" class="col col-form-label">大人（三人房）</label>
+                    <div class="col">
+                        <input type="number" class="form-control" id="itemPrice1" placeholder="請填寫金額，如未有此房型請留空。">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="itemPrice1" class="col col-form-label">大人（四人房）</label>
+                    <div class="col">
+                        <input type="number" class="form-control" id="itemPrice1" placeholder="請填寫金額，如未有此房型請留空。">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="itemPrice1" class="col col-form-label">小孩（未佔床）</label>
+                    <div class="col">
+                        <input type="number" class="form-control" id="itemPrice1" placeholder="請填寫金額，如未有此房型請留空。">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="itemPrice1" class="col col-form-label">小孩（含床位）</label>
+                    <div class="col">
+                        <input type="number" class="form-control" id="itemPrice1" placeholder="請填寫金額，如未有此房型請留空。">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="itemPrice1" class="col col-form-label">嬰兒</label>
+                    <div class="col">
+                        <input type="number" class="form-control" id="itemPrice1" placeholder="請填寫金額，如未有此房型請留空。">
+                    </div>
+                </div>
+
+                <!----------------------------送出---------------------------->
+                <h3>訂單訂金設定</h3>
+                <div class="form-group row">
+                    <label for="itemPriceDeposit" class="col col-form-label">應付訂金占比(%)</label>
+                    <div class="col">
+                        <select class="form-control" id="itemPriceDeposit">
+                            <option>10%</option>
+                            <option>20%</option>
+                            <option>30%</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+{% endblock %}
+{% block footer_script %}
+    <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('itemInfo');
+        CKEDITOR.replace('itemRemark');
+    </script>
+    <script>
+        var data = {{  tourComponentList |safe  }}
+            $(document).ready(function () {
+                $('.js-example-basic-single').select2({
+                    tags: true,
+                    tokenSeparators: [',', ' '],
+                    data: data,
+                    val: null,
+                })
+            });
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js'></script>
+    <script>
+        let vm = new Vue({
+            delimiters: ['[[', ']]'],
+            el: "#app",
+            data: {
+                dayScheduleList: [],
+                dayDining: {
+                    breakfast: '敬請自理',
+                    lunch: '敬請自理',
+                    dinner: '敬請自理',
+                    hotel: ''
+                },
+                dayRemark: '',
+            },
+            methods: {
+                scheduleAdd() {
+                    let schedule = $('#scheduleSearch').select2('data')[0];
+                    let scheduleData = {
+                        'id': schedule.id,
+                        'name': schedule.text,
+                        'show': true,
+                    }
+                    this.dayScheduleList.push(scheduleData);
+                },
+                scheduleHide(id) {
+                    this.dayScheduleList = this.dayScheduleList.filter((daySchedule) => daySchedule.id != id)
+                },
+                scheduleDel(id) {
+                    this.dayScheduleList = this.dayScheduleList.filter((daySchedule) => daySchedule.id != id)
+                },
+            },
+            computed: {}
+        });
+    </script>
+{% endblock %}

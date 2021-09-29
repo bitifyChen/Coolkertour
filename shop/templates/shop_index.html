@@ -16,6 +16,9 @@
         </div>
     </section><!-- #page-title end -->
 
+    {% if request.user.is_authenticated %}
+       {% include "cms/cms_bar.html" %}
+    {% endif %}
     <!-- Content
 		============================================= -->
     <section id="content">
