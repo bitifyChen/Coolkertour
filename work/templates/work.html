@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load cropping %}
+{% load tour_tag %}
+{% block main_body %}
+     <section id="page-title" class=" page-title-parallax page-title-dark" style="background-image: url('{% static 'photo/slider/bg-1.jpg' %}'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
+        <div class="container clearfix" style="text-align: center;">
+            <h1>{{ album.title }}</h1>
+            <span>{{ album.sub_title }}</span>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">首頁</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'index' %}#section-services">關於酷客</a></li>
+                <li class="breadcrumb-item active" aria-current="page">【{{ album.title }}】</li>
+            </ol>
+        </div>
+    </section><!-- #page-title end -->
+    <section id="content" style="margin-bottom: 0px;">
+        <div class="content-wrap nopadding">
+            <div class="center page-section">
+                <div class="container clearfix">
+                    <h2 class="divcenter bottommargin font-body" style="max-width: 700px; font-size: 40px;">{{ album.sub_title }}</h2>
+                    <p class="lead divcenter bottommargin" style="max-width: 800px;">{{ album.description }}</p>
+                    <p class="bottommargin" style="font-size: 16px;"><a href="#" data-scrollto="#section-services" data-easing="easeInOutExpo" data-speed="1250" data-offset="70" class="more-link">觀看照片 <i class="icon-angle-down"></i></a></p>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="section-services">
+        <div class="content-wrap">
+            <div class="container clearfix">
+                <div class="col_full clearfix">
+                    <div class="masonry-thumbs grid-4" data-big="3,4" data-lightbox="gallery">
+                        {% for photo in photos %}
+                            <a href="{{ photo.photo.url }}" data-lightbox="gallery-item"><img class="image_fade" src="{{ photo.square_banner.url }}" alt=""></a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block footer_script %}
+
+{% endblock %}

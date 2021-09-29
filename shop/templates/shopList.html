@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load cropping %}
+{% load tour_tag %}
+{% block main_body %}
+    <style>
+
+
+    </style>
+    <section>
+        <div class="content-wrap">
+            <div class="container clearfix" style="position:sticky">
+                <div class="heading-block center">
+                    <h2>宜蘭童話仙境１天、６人成行～明池森林、蕨園神木迷宮步道、清水地熱</h2>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row section topmargin-sm p-4">
+                    <div class="col-md-4 fancy-title title-bottom-border title-center">
+                        <h4>團費包含：</h4>
+                    </div>
+
+                    <div class="col-md-8">
+                        1、【交通】車資及過路費用。<br>
+                        2、【活動】表列行程。<br>
+                        3、【餐食】表列行程。<br>
+                        4、【保險】新台幣200萬旅行業責任意外險附加20萬意外醫療險。<br>
+                        5、【其他】每人一瓶礦泉水、司機小費。<br>
+                    </div>
+                    <div class="col-12">
+                        <hr>
+                    </div>
+                    <div class="col-md-4 fancy-title title-bottom-border title-center">
+                        <h4>團費不含：</h4>
+                    </div>
+                    <div class="col-md-8">
+                        1、個人因素所產生之消費，如飲料、私人購物費…等。<br>
+                        2、個人旅遊平安保險，依規定旅客若有個別需求，得自行投保旅行平安保險。<br>
+                        3、本行程表上未註明之各項開銷，建議、自費或自由行程所衍生之任何費用。<br>
+                    </div>
+                </div>
+                <!-- 價格說明 -->
+                <div class="section topmargin-sm p-4">
+                    <div class="container">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>出發日期</th>
+                                    <th>出發地點</th>
+                                    <th>售價</th>
+                                    <th>總人數</th>
+                                    <th>可報名</th>
+                                    <th>狀態</th>
+                                    <th>出團備註</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr>
+                                    <td>09/16(四)</td>
+                                    <td>台北</td>
+                                    <td>1588</td>
+                                    <td>6</td>
+                                    <td>6</td>
+                                    <td><a href="#" class="button button-3d button-rounded button-disabled "><i
+                                            class="icon-remove"></i>已經截止</a></td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>09/16(四)</td>
+                                    <td>台北</td>
+                                    <td>1588</td>
+                                    <td>6</td>
+                                    <td>6</td>
+                                    <td><a href="{% url 'shop_submit' %}"
+                                           class="button button-3d button-rounded button-amber"><i
+                                            class="icon-ok"></i>開放候補</a>
+                                    </td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>09/16(四)</td>
+                                    <td>台北</td>
+                                    <td>1588</td>
+                                    <td>6</td>
+                                    <td>6</td>
+                                    <td><a href="{% url 'shop_submit' %}" class="button button-3d button-rounded"><i
+                                            class="icon-ok"></i>立即報名</a>
+                                    </td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>09/16(四)</td>
+                                    <td>台北</td>
+                                    <td>1588</td>
+                                    <td>6</td>
+                                    <td>6</td>
+                                    <td><a href="#" class="button button-3d button-rounded"><i class="icon-ok"></i>立即報名</a>
+                                    </td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td>09/16(四)</td>
+                                    <td>台北</td>
+                                    <td>1588</td>
+                                    <td>6</td>
+                                    <td>6</td>
+                                    <td><a href="#" class="button button-3d button-rounded"><i class="icon-ok"></i>立即報名</a>
+                                    </td>
+                                    <td>-</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section><!-- #content end -->
+
+{% endblock %}
+{% block footer_script %}
+
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% load tour_tag %}
+{% load staticfiles %}
+{% load cropping %}
+{% block main_body %}
+    <section id="page-title" class=" page-title-parallax page-title-dark" style="background-image: url('{{ obj_tour.photo1.url }}'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
+        <div class="container clearfix" style="text-align: center;">
+            <h1>{{ obj_tour.viewpoint }}</h1>
+            <ol class="breadcrumb">
+                {% if obj_tour.category.foreign %}
+                    <li class="breadcrumb-item"><a href="{% url 'tour' %}?foreign=1">國外旅遊</a></li>
+                {% else %}
+                    <li class="breadcrumb-item"><a href="{% url 'tour' %}">國內旅遊</a></li>
+                {% endif %}
+                <li class="breadcrumb-item"><a href="{% url 'tour' %}{% if obj_tour.category.foreign %}?foreign=1{% endif %}#{{  obj_tour.category.filter }}">{{ obj_tour.category }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ obj_tour.viewpoint }}</li>
+            </ol>
+        </div>
+    </section>
+    <!-- Content
+    ============================================= -->
+    <section id="content">
+        <div class="content-wrap">
+            <div class="container clearfix">
+                <!-- Post Content
+                ============================================= -->
+                <div class="postcontent nobottommargin col_last clearfix">
+                    <div class="single-post nobottommargin">
+                        <!-- Single Post
+                        ============================================= -->
+                        <div class="entry clearfix">
+                            <!-- Entry Title
+                            ============================================= -->
+                            <div class="entry-title">
+                                <h2>{{ obj_tour.name }}</h2>
+                            </div><!-- .entry-title end -->
+                            <!-- Entry Image
+                            ============================================= -->
+                            <div class="entry-image">
+                                <img src="{{ obj_tour.photo1.url }}" alt="Blog Single">
+                            </div><!-- .entry-image end -->
+                            <!-- Entry Content
+                            ============================================= -->
+                            <div class="entry-content notopmargin">
+                                {{ obj_tour.content|safe }}
+                            <!-- Post Single - Content End -->
+                                <div class="clear"></div>
+                            </div>
+                        </div><!-- .entry end -->
+
+                        {% if tours %}<h4>你可能也會喜歡：</h4>{% endif %}
+                        <div class="related-posts clearfix">
+                            {% for tour in tours %}
+                                <div class="col_half nobottommargin col_last">
+                                    <div class="mpost clearfix">
+                                        <div class="entry-image">
+                                            <a href="{% url 'tour_detail' tour.id %}"><img src="{% cropped_thumbnail tour 'crop_photo1'  %}" alt="Blog Single"></a>
+                                        </div>
+                                        <div class="entry-c">
+                                            <div class="entry-title">
+                                                <h4><a href="{% url 'tour_detail' tour.id %}">{{ tour.name }}</a></h4>
+                                            </div>
+                                            <ul class="entry-meta clearfix">
+                                                <li class="" aria-current="page">{{ tour.viewpoint }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div><!-- .postcontent end -->
+                <!-- Sidebar
+                ============================================= -->
+                <div class="sidebar nobottommargin clearfix">
+                    <div class="sidebar-widgets-wrap">
+                        <div class="widget clearfix">
+                            <div class="tabs nobottommargin clearfix" id="sidebar-tabs">
+                                <ul class="tab-nav clearfix">
+{#                                    <li><a href="#tabs-1">人氣排行</a></li>#}
+                                    <li><a href="#tabs-2">最新行程</a></li>
+                                </ul>
+                                <div class="tab-container">
+{#                                    <div class="tab-content clearfix" id="tabs-1">#}
+{#                                        <div id="popular-post-list-sidebar">#}
+{#                                            <div class="spost clearfix">#}
+{#                                                <div class="entry-image">#}
+{#                                                    <a href="#" class="nobg"><img class="rounded-circle" src="images/magazine/small/3.jpg" alt=""></a>#}
+{#                                                </div>#}
+{#                                                <div class="entry-c">#}
+{#                                                    <div class="entry-title">#}
+{#                                                        <h4><a href="#">Debitis nihil placeat, illum est nisi</a></h4>#}
+{#                                                    </div>#}
+{#                                                    <ul class="entry-meta">#}
+{#                                                        <li><i class="icon-comments-alt"></i> 35 Comments</li>#}
+{#                                                    </ul>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                            <div class="spost clearfix">#}
+{#                                                <div class="entry-image">#}
+{#                                                    <a href="#" class="nobg"><img class="rounded-circle" src="images/magazine/small/2.jpg" alt=""></a>#}
+{#                                                </div>#}
+{#                                                <div class="entry-c">#}
+{#                                                    <div class="entry-title">#}
+{#                                                        <h4><a href="#">Elit Assumenda vel amet dolorum quasi</a></h4>#}
+{#                                                    </div>#}
+{#                                                    <ul class="entry-meta">#}
+{#                                                        <li><i class="icon-comments-alt"></i> 24 Comments</li>#}
+{#                                                    </ul>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+
+                                    <div class="tab-content clearfix" id="tabs-2">
+                                        <div id="recent-post-list-sidebar">
+                                            {% for tour in side_bar_tours %}
+                                                <div class="spost clearfix">
+                                                    <div class="entry-image">
+                                                        <a href="{% url 'tour_detail' tour.id %}" class="nobg"><img class="rounded-circle" src="{% cropped_thumbnail tour 'crop_photo1'  %}" alt=""></a>
+                                                    </div>
+                                                    <div class="entry-c">
+                                                        <div class="entry-title">
+                                                            <h4><a href="{% url 'tour_detail' tour.id %}">{{  tour.name }}</a></h4>
+                                                        </div>
+                                                        <ul class="entry-meta">
+                                                            {% if tour.category.foreign %}
+                                                                <li class="breadcrumb-item"><a href="{% url 'tour' %}?foreign=1">國外旅遊</a></li>
+                                                            {% else %}
+                                                                <li class="breadcrumb-item"><a href="{% url 'tour' %}">國內旅遊</a></li>
+                                                            {% endif %}
+                                                            <li class=""><a href="{% url 'tour' %}{% if tour.category.foreign %}?foreign=1{% endif %}#{{  tour.category.filter }}">{{ tour.category }}</a></li>
+                                                            <li class="" aria-current="page">{{ tour.viewpoint }}</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- .sidebar end -->
+            </div>
+        </div>
+    </section><!-- #content end -->
+{% endblock %}

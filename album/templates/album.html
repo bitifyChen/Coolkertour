@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load cropping %}
+{% load tour_tag %}
+{% load album_tag %}
+{% block main_body %}
+    <section id="page-title" class=" page-title-parallax page-title-dark" style="background-image: url('{% static 'photo/slider/bg-1.jpg' %}'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
+        <div class="container clearfix" style="text-align: center;">
+            <h2 style="color: #ffffff">客戶案例</h2>
+        </div>
+    </section><!-- #page-title end -->
+    <!-- Content
+    ============================================= -->
+    <section id="content">
+        <div class="content-wrap">
+            <div class="container clearfix">
+                <!-- Post Content
+                ============================================= -->
+                <div class="postcontent nobottommargin col_last">
+                    <!-- Shop
+                    ============================================= -->
+                    <div id="shop" class="shop product-3 grid-container clearfix">
+                        <!-- 圖片大小為像素320*180-->
+                        {% for album in albums %}
+                            {% get_album_cover_photo album as cover_photo %}
+                            <div class="product clearfix {{ album.travel_date.year }}">
+                                <div class="product-image">
+                                    <a href="{% url 'album_detail' album.id %}">
+                                        {% if cover_photo %}
+                                            <img src="{{ cover_photo }}">
+                                        {% else %}
+                                            <img src="{% static 'photo/index/main-bg.png' %}">
+                                        {% endif %}
+                                    </a>
+                                </div>
+                                <div class="product-desc center">
+                                    <div class="product-title"><h3><a href="{% url 'album_detail' album.id %}">{{ album.name }}{{ album.travel_date }}</a></h3></div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div><!-- #shop end -->
+                </div><!-- .postcontent end -->
+                <!-- Sidebar
+                ============================================= -->
+                <div class="sidebar nobottommargin">
+                    <div class="sidebar-widgets-wrap">
+                        <div class="widget widget-filter-links clearfix">
+                            <h3>客戶案例</h3>
+                            <ul class="custom-filter" data-container="#shop" data-active-class="active-filter">
+                                <li class="widget-filter-reset active-filter"><a href="#" data-filter="*">查看全部</a></li>
+                                {% for year, count in years.items %}
+                                    <li><a href="#" data-filter=".{{ year }}">{{ year }}</a><span>{{ count }}</span></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div><!-- .sidebar end -->
+            </div>
+        </div>
+    </section><!-- #content end -->
+{% endblock %}
+{% block footer_script %}{% endblock %}

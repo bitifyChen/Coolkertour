@@ -1,0 +1,527 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load cropping %}
+{% load tour_tag %}
+{% block main_body %}
+    <section>
+        <div class="content-wrap">
+            <div class="container clearfix" style="position:sticky">
+                <div class="heading-block center">
+                    <h2>宜蘭童話仙境１天、６人成行～明池森林、蕨園神木迷宮步道、清水地熱</h2>
+                </div>
+            </div>
+            <div class="container">
+                <!-- 價格說明 -->
+                <div class="section topmargin-sm p-4">
+                    <div class="row">
+                        <div class="col-md-9 col-sm-12">
+                            <div class="row">
+                                <div class="col-md-4 fancy-title title-bottom-border title-center">
+                                    <h4>售　　價：</h4>
+                                </div>
+                                <div class="col-md-8 priceBtnList">
+                                    <div class="priceBtn">
+                                        <span class="adult">大人</span> <span class="room">（單人房）</span><span
+                                            class="price">2000</span>
+                                    </div>
+                                    <div class="priceBtn">
+                                        <span class="adult">大人</span> <span class="room">（雙人房）</span><span
+                                            class="price">2000</span>
+                                    </div>
+                                    <div class="priceBtn">
+                                        <span class="adult">大人</span> <span class="room">（三人房）</span><span
+                                            class="price">2000</span>
+                                    </div>
+                                    <div class="priceBtn">
+                                        <span class="adult">大人 </span><span class="room">（四人房）</span><span
+                                            class="price">2000</span>
+                                    </div>
+                                    <div class="priceBtn">
+                                        <span class="adult">小孩</span> <span class="room">(不佔床)</span><span
+                                            class="price">2000</span>
+                                    </div>
+                                    <div class="priceBtn">
+                                        <span class="adult">小孩</span> <span class="room">(含床位)</span><span
+                                            class="price">2000</span>
+                                    </div>
+                                    <div class="priceBtn">
+                                        <span class="adult">嬰兒</span> <span class="room">-</span><span
+                                            class="price">2000</span>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4 fancy-title title-bottom-border title-center">
+                                    <h4>團費包含：</h4>
+                                </div>
+
+                                <div class="col-md-8">
+                                    1、【交通】車資及過路費用。<br>
+                                    2、【活動】表列行程。<br>
+                                    3、【餐食】表列行程。<br>
+                                    4、【保險】新台幣200萬旅行業責任意外險附加20萬意外醫療險。<br>
+                                    5、【其他】每人一瓶礦泉水、司機小費。<br>
+                                </div>
+                                <div class="col-12">
+                                    <hr>
+                                </div>
+                                <div class="col-md-4 fancy-title title-bottom-border title-center">
+                                    <h4>團費不含：</h4>
+                                </div>
+                                <div class="col-md-8">
+                                    1、個人因素所產生之消費，如飲料、私人購物費…等。<br>
+                                    2、個人旅遊平安保險，依規定旅客若有個別需求，得自行投保旅行平安保險。<br>
+                                    3、本行程表上未註明之各項開銷，建議、自費或自由行程所衍生之任何費用。<br>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-3 col-sm-12">
+                            <a href="{% url 'shop_list' %}" class="button button-rounded btn-block text-center"
+                               style="width:100%;overflow:hidden">選擇出團日期</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 行程特色 -->
+                <div class="divider divider-border divider-center"><i class="icon-line-bell"></i></div>
+                <div class="topmargin-sm">
+                    <div class="fancy-title title-bottom-border title-center">
+                        <h3><i class="icon-line-bell"></i>行程特色</h3>
+                    </div>
+                    <div class="text-left p-5">
+                        <div title="行程特色" id="spec">
+                            <link href="https://work.bwt.com.tw/css/spec.css" rel="stylesheet" type="text/css">
+                            <h3><span style="color:#ff0099;"><span style="font-size: 18px;"><strong>宜蘭的『人間仙境—太平山』坐落於中央山脈北端，</strong></span></span>
+                            </h3>
+                            <h3><span style="color:#ff0099;"><span
+                                    style="font-size: 18px;"><strong>泰雅族取蓊鬱蒼翠之意稱此地為「眠腦」，</strong></span></span></h3>
+                            <h3><span style="color:#ff0099;"><span style="font-size: 18px;"><strong>日治時期與阿里山、八仙山並列為「台灣三大林場」，</strong></span></span>
+                            </h3>
+                            <h3><span style="color:#ff0099;"><span style="font-size: 18px;"><strong>更於昭和二年臺灣日日新報民眾票選為「臺灣八景十二勝」，</strong></span></span>
+                            </h3>
+                            <h3><span style="color:#ff0099;"><span
+                                    style="font-size: 18px;"><strong>高山平地起從亞熱帶至冷溫帶氣候林相豐富，</strong></span></span></h3>
+                            <h3><span style="color:#ff0099;"><span style="font-size: 18px;"><strong>台灣特有種哺乳類與鳥類頻繁出沒更不在話下，</strong></span></span>
+                            </h3>
+                            <h3><span style="color:#ff0099;"><span style="font-size: 18px;"><strong>園內溫泉、日出、雲海、雪景、瀑布、湖泊、林鐵等資源，</strong></span></span>
+                            </h3>
+                            <h3><span style="color:#ff0099;"><span
+                                    style="font-size: 18px;"><strong>為霧氣氤氳的太平山林增添無窮魅力。</strong></span></span></h3>
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="newpage"
+                                   title="台灣山毛櫸步道地圖">
+                                <tbody>
+                                <tr>
+                                    <td><p><img
+                                            src="https://work.bwt.com.tw/eWeb_bestway/IMGDB/003237/003861/00080059.JPG">
+                                    </p>
+                                        <p style="text-align: right;">圖片提供：行政院農業委員會林務局羅東林區管理處</p></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p>　</p>
+                            <p>　</p><h4><span style="color:#0000FF;font-size:26px;">☛ <strong>太平山深度山徑</strong></span>
+                        </h4>
+                            <p>　</p>
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="newpage"
+                                   title="太平山台灣山毛櫸步道">
+                                <tbody>
+                                <tr>
+                                    <td><img
+                                            src="https://work.bwt.com.tw/eWeb_bestway/IMGDB/003237/003861/00080060.PNG">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p><strong style="font-size: 18px;">　【台灣山毛櫸國家</strong><span style="font-size:18px;"><strong>步道】</strong></span>
+                            </p>
+                            <p>　　步道全長約3.8公里，來回步行時間約3小時，難易度為中量級。</p>
+                            <p>　　台灣山毛櫸為台灣特有的殼斗科山毛櫸屬植物，屬於古老珍貴的落葉喬木孑遺植物，又稱台灣水青岡。</p>
+                            <p>　　前段較為平坦但雨天多泥濘，以生態工法鋪設完整；2.5公里後坡度變化較大，去程陡下回程陡上需良好體力。</p><h4>　</h4><h4>　</h4><h4><span
+                                style="color:#0000FF;font-size:26px;">☛ <strong>台版冰島藍湖美人湯</strong></span></h4>
+                            <p>　</p>
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="newpage"
+                                   title="鳩之澤溫泉">
+                                <tbody>
+                                <tr>
+                                    <td><img
+                                            src="https://work.bwt.com.tw/eWeb_bestway/IMGDB/003237/003861/00079924.PNG">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p><span style="font-size:18px;"><strong>　【鳩之澤溫泉】</strong><span
+                                    style="font-size:14px;"><span
+                                    style="color:#FF0000;">※本行程不含鳩之澤溫泉泡湯門票，敬請自理。</span></span></span></p>
+                            <p>　　從山麓石縫中滲流而出的碳酸氫鈉混和泉，泉質清澈無色無臭美稱「美人湯」。</p>
+                            <p>　　泉水沉澱作用後呈現寶藍色，景致媲美冰島藍湖溫泉，人氣主打戶外SPA池，另有裸湯、湯屋、煮蛋槽、便利販賣部等設施。</p>
+                            <p></p><h4>　</h4><h4><span style="color:#0000FF;font-size:26px;">☛ <strong>熱門美景打卡景點</strong></span>
+                        </h4>
+                            <p>　</p>
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" title="天送埤車站">
+                                <tbody>
+                                <tr>
+                                    <td><img
+                                            src="https://work.bwt.com.tw/eWeb_bestway/IMGDB/003237/003861/00080118.JPG">
+                                        <p></p></td>
+                                </tr>
+                                <tr>
+                                    <td><p><img
+                                            src="https://work.bwt.com.tw/eWeb_bestway/IMGDB/003237/003861/00080120.JPG">
+                                    </p></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p><span style="font-size:18px;"><strong>　【天送埤車站】</strong></span></p>
+                            <p><strong>　　建於日治時期，早期為太平山森林鐵道十個車站之一，是平原段進入山區的轉運大站，在當時以運送木材為主，同時也營業載客，方便當地居民進出。昔日的風華不在，只留下那充滿日式風格的建築與純樸的風貌，讓前來的遊客重返當年車站的繁華。</strong>
+                            </p>
+                            <p><strong>　</strong></p>
+                            <p><strong>　</strong></p>
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="newpage"
+                                   title="頭城老街">
+                                <tbody>
+                                <tr>
+                                    <td><img
+                                            src="http://work.bwt.com.tw/eWeb_bestway/IMGDB/003237/003861/00080153.JPG	">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p><strong><span style="font-size:18px;"><strong>　【頭城老街】</strong></span></strong></p>
+                            <p><strong>　　頭城老街即有「開蘭第一街」之稱、古名「頭圍街」的頭城鎮和平街，其範圍是從該街的「南門福德祠」到「北門福德祠」之間約長600公尺的部分。現今的頭城老街上依舊留有清代及日據時代所建造的樓房，像是日治時期的吳宅、新長興樹記、源合成與陳春記以及融合各式風格的盧宅等...，懷舊風情的古典，見證了自繁盛到衰落的歷史。</strong>
+                            </p>
+                            <p><strong>　</strong></p>
+                            <p><strong>　</strong></p>
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="newpage"
+                                   title="宜蘭國立傳統藝術中心">
+                                <tbody>
+                                <tr>
+                                    <td><img
+                                            src="http://work.bwt.com.tw/eWeb_bestway/IMGDB/003237/003861/00080149.JPG	">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p><strong><span style="font-size:18px;"><strong>　【宜蘭國立傳統藝術中心】</strong></span></strong></p>
+                            <p><strong>　　踏入園區，映入眼簾的是傳達生活與工藝的傳習街，呼應手之勞動、心之感動。劇展廣場舞台演繹肢體的人文美感。匯集老街建築的民藝街、河道波光照映的臨水街，豐富傳統生活市集的趣味。國家興建的文昌祠，呈現歲時節慶與信仰民俗之有機文化；家廟建築的廣孝堂，呈現家族凝聚與生命禮俗之人文意涵；民居建築的黃舉人宅，呈現常民文化與新生兒儀禮的體驗樂趣。歡迎用心感受一年四季不同的傳藝文化園區。</strong>
+                            </p>
+                            <p><strong>　</strong></p>
+                            <p><strong>　</strong></p>
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" class="newpage"
+                                   title="羅東林業文化園區">
+                                <tbody>
+                                <tr>
+                                    <td><img
+                                            src="http://work.bwt.com.tw/eWeb_bestway/IMGDB/003237/003861/00080176.JPG	">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p><strong><span style="font-size:18px;"><strong>　【羅東林業文化園區】</strong></span></strong></p>
+                            <p><strong>　　台灣的三大林場太平山、阿里山與八仙山，其中以太平山的產量最大，民國 13
+                                年完成第一架蒸汽集材機，土場至羅東森林鐵路的開通，帶動羅東的發展，成為集散重鎮。而今走入羅東林場，蔭蔭鬱鬱的環境，舒適寧靜地讓人不自主的停下腳步。</strong></p>
+                            <h4><strong>　</strong></h4><h4><strong>　</strong></h4><h4><strong><span
+                                style="color:#0000FF;font-size:26px;">♞ <strong>迷走圈圈粉紅網美</strong></span></strong></h4>
+                            <p><strong>　</strong></p>
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" title="一夜煙波，謐謐拾光">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen="" frameborder="0" height="534"
+                                                src="https://www.youtube.com/embed/ZtxGwgvHEjI?controls=0&amp;modestbranding=1&amp;rel=0&amp;showinfo=0"
+                                                style="margin: 0 0 0 0px; vertical-align: top;" width="100%"></iframe>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p><strong>　</strong></p>
+                            <table align=" center" border="0" cellpadding="0" cellspacing="0" title="煙波宜蘭館">
+                                <tbody>
+                                <tr>
+                                    <td><img
+                                            src="https://work.bwt.com.tw/eWeb_bestway/IMGDB/003237/003861/00080166.JPG">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p><strong><span style="font-size:18px;"><strong>　【煙波宜蘭館】★★★★</strong></span></strong></p>
+                            <p><strong>　　晶位於縣政公園園區旁，透過空間設計，打造一間網美住宿飯店，每個角落都是最佳拍照點。</strong></p>
+                            <p><strong>　</strong></p>
+                            <table align="center" border="0" cellpadding="0" cellspacing="0" title="迷走圈圈">
+                                <tbody>
+                                <tr>
+                                    <td><img src="http://work.bwt.com.tw/eWeb_bestway/IMGDB/003237/003861/00080165.JPG">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p><strong><span style="font-size:18px;"><strong>　【迷走圈圈】</strong></span></strong></p>
+                            <p><strong>　　以浪漫的粉嫩色調和多變的泡泡，打造五大主題區，讓你發揮你的趣味想像，是個為拍照而生的互動空間。</strong></p><h4>
+                            <strong>　</strong></h4><h4><strong>　</strong></h4><strong>
+                        </strong></div>
+                    </div>
+                </div>
+
+                <!-- 詳細行程 -->
+                <div class="divider divider-border divider-center"><i class="icon-flag2"></i></div>
+                <div class="topmargin-sm">
+                    <div class="fancy-title title-bottom-border title-center">
+                        <h3><i class="icon-flag2"></i>詳細行程</h3>
+                    </div>
+                    <div class="day-box section p-4">
+                        <div class="day-title">
+                            <div class="day-num">
+                                1
+                            </div>
+                            <div class="day-trips">
+                                <span class="day-trip">台北集合出發</span>
+                                <span class="day-trip">明池森林遊樂區</span>
+                                <span class="day-trip">清水地熱公園</span>
+                                <span class="day-trip">翰品酒店</span>
+                            </div>
+                        </div>
+                        <div class="day-body">
+                            <div class="day-trip">
+                                <div class="day-trip-img">
+                                    <img src="https://work.bwt.com.tw/travel/GetImg.ashx?F=173610b3-a6ec-4c88-91db-8479f8032e3a&i=4efb"
+                                         class="img-fluid" style="width: 100%">
+                                </div>
+                                <div class="day-trip-info">
+                                    <div class="title">
+                                        明池森林遊樂區
+                                    </div>
+                                    <div class="content">
+                                        明池又名「池端」是一個高山人工湖泊，四周原始森林密佈，終年煙嵐繚繞景色迷濛曼妙，有「北橫明珠」的美譽。明池森林遊樂區內以庭園山水的概念，設計出具有古代風格的建築景觀，另有明池苗圃、苔園、蕨園、森林步道、國父誕辰紀念林園等，且於山坡步道兩旁設有梯形株苗種育培養區，沿著斜坡步道而行，可眺望高山野地美景及細賞各式花卉的自然風貌。
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="day-trip">
+                                <div class="day-trip-img">
+                                    <img src="https://work.bwt.com.tw/travel/GetImg.ashx?F=99bc7a80-da4f-4e0d-a214-2757c8f9f08a&i=94c9"
+                                         class="img-fluid" style="width: 100%">
+                                </div>
+                                <div class="day-trip-info">
+                                    <div class="title">
+                                        清水地熱公園
+                                    </div>
+                                    <div class="content">
+                                        清水地熱屬於帶有硫磺味的鹼性泉，泉水清澈且溫度約攝氏95度。沿途佈有岩石及綠潭，加上地熱水煙瀰漫，猶如人間仙境般優美。園區包含煮食池、泡腳池等，另設有食材販售部等，可購買雞蛋、玉米、蝦子等食材，租借煮食器具，讓您體驗泡腳、野餐雙享受。
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="day-trip">
+                                <div class="day-trip-img">
+                                    <img src="https://work.bwt.com.tw/travel/GetImg.ashx?F=99bc7a80-da4f-4e0d-a214-2757c8f9f08a&i=94c9"
+                                         class="img-fluid" style="width: 100%">
+                                </div>
+                                <div class="day-trip-info">
+                                    <div class="title">
+                                        清水地熱公園
+                                    </div>
+                                    <div class="content">
+                                        清水地熱屬於帶有硫磺味的鹼性泉，泉水清澈且溫度約攝氏95度。沿途佈有岩石及綠潭，加上地熱水煙瀰漫，猶如人間仙境般優美。園區包含煮食池、泡腳池等，另設有食材販售部等，可購買雞蛋、玉米、蝦子等食材，租借煮食器具，讓您體驗泡腳、野餐雙享受。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-footer">
+                            <div class="day-trip-notice">
+                                <div class="fancy-title title-bottom-border title-center">
+                                    <h4><i class="icon-line-bell"></i>注意事項</h4>
+                                </div>
+                                <ul>
+                                    <li>下車參觀：太魯閣國家公園、花蓮台泥DAKA星巴克和平門市</li>
+                                    <li>08:00～08:10 台北車站南一門集合出發、帶著愉快的心情開啟宜花之旅<br>
+                                        10:00~11:00 台泥DAKA<br>
+                                        12:00~16:00 太魯閣國家公園<br>
+                                        17:30 飯店CHECK IN<br>
+                                        （途中將依實際狀況調整景點停留時間）
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <div class="day-trip-dining">
+                                <div class="fancy-title title-bottom-border title-center">
+                                    <h4><i class="icon-food2"></i>住宿與用餐</h4>
+                                </div>
+                                <div class="dining-boxs">
+                                    <div class="dining-box">
+                                        <div class="dining-title">
+                                            <i class="fas fa-hamburger fa-fw"></i>早餐：
+                                        </div>
+                                        <div class="dining-content">
+                                            敬請自理
+                                        </div>
+                                    </div>
+
+                                    <div class="dining-box">
+                                        <div class="dining-title">
+                                            <i class="fas fa-utensils fa-fw"></i>中餐：
+                                        </div>
+                                        <div class="dining-content">
+                                            營養健康餐盒
+                                        </div>
+                                    </div>
+                                    <div class="dining-box">
+                                        <div class="dining-title">
+                                            <i class="fas fa-wine-glass-alt fa-fw"></i>晚餐：
+                                        </div>
+                                        <div class="dining-content">
+                                            飯店用餐
+                                        </div>
+                                    </div>
+                                    <div class="dining-box">
+                                        <div class="dining-title">
+                                            <i class="fas fa-bed fa-fw"></i>住宿：
+                                        </div>
+                                        <div class="dining-content">
+                                            松風文旅／煙波大飯店宜蘭館／ 或同級
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="day-box section p-4">
+                        <div class="day-title">
+                            <div class="day-num">
+                                2
+                            </div>
+                            <div class="day-trips">
+                                <span class="day-trip">台北車站</span>
+                                <span class="day-trip">明池森林遊樂區</span>
+                                <span class="day-trip">清水地熱公園</span>
+                                <span class="day-trip">台北</span>
+                            </div>
+                        </div>
+                        <div class="day-body">
+                            <div class="day-trip">
+                                <div class="day-trip-img">
+                                    <img src="https://work.bwt.com.tw/travel/GetImg.ashx?F=173610b3-a6ec-4c88-91db-8479f8032e3a&i=4efb"
+                                         class="img-fluid" style="width: 100%">
+                                </div>
+                                <div class="day-trip-info">
+                                    <div class="title">
+                                        明池森林遊樂區
+                                    </div>
+                                    <div class="content">
+                                        明池又名「池端」是一個高山人工湖泊，四周原始森林密佈，終年煙嵐繚繞景色迷濛曼妙，有「北橫明珠」的美譽。明池森林遊樂區內以庭園山水的概念，設計出具有古代風格的建築景觀，另有明池苗圃、苔園、蕨園、森林步道、國父誕辰紀念林園等，且於山坡步道兩旁設有梯形株苗種育培養區，沿著斜坡步道而行，可眺望高山野地美景及細賞各式花卉的自然風貌。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="day-trip">
+                                <div class="day-trip-img">
+                                    <img src="https://work.bwt.com.tw/travel/GetImg.ashx?F=99bc7a80-da4f-4e0d-a214-2757c8f9f08a&i=94c9"
+                                         class="img-fluid" style="width: 100%">
+                                </div>
+                                <div class="day-trip-info">
+                                    <div class="title">
+                                        清水地熱公園
+                                    </div>
+                                    <div class="content">
+                                        清水地熱屬於帶有硫磺味的鹼性泉，泉水清澈且溫度約攝氏95度。沿途佈有岩石及綠潭，加上地熱水煙瀰漫，猶如人間仙境般優美。園區包含煮食池、泡腳池等，另設有食材販售部等，可購買雞蛋、玉米、蝦子等食材，租借煮食器具，讓您體驗泡腳、野餐雙享受。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="day-footer">
+                            <div class="day-trip-notice">
+                                <div class="fancy-title title-bottom-border title-center">
+                                    <h4><i class="icon-line-bell"></i>注意事項</h4>
+                                </div>
+                                <ul>
+                                    <li>下車參觀：太魯閣國家公園、花蓮台泥DAKA星巴克和平門市</li>
+                                    <li>08:00～08:10 台北車站南一門集合出發、帶著愉快的心情開啟宜花之旅<br>
+                                        10:00~11:00 台泥DAKA<br>
+                                        12:00~16:00 太魯閣國家公園<br>
+                                        17:30 飯店CHECK IN<br>
+                                        （途中將依實際狀況調整景點停留時間）
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <div class="day-trip-dining">
+                                <div class="fancy-title title-bottom-border title-center">
+                                    <h4><i class="icon-food2"></i>住宿與用餐</h4>
+                                </div>
+                                <div class="dining-boxs">
+                                    <div class="dining-box">
+                                        <div class="dining-title">
+                                            <i class="fas fa-hamburger fa-fw"></i>早餐：
+                                        </div>
+                                        <div class="dining-content">
+                                            敬請自理
+                                        </div>
+                                    </div>
+
+                                    <div class="dining-box">
+                                        <div class="dining-title">
+                                            <i class="fas fa-utensils fa-fw"></i>中餐：
+                                        </div>
+                                        <div class="dining-content">
+                                            營養健康餐盒
+                                        </div>
+                                    </div>
+                                    <div class="dining-box">
+                                        <div class="dining-title">
+                                            <i class="fas fa-wine-glass-alt fa-fw"></i>晚餐：
+                                        </div>
+                                        <div class="dining-content">
+                                            飯店用餐
+                                        </div>
+                                    </div>
+                                    <div class="dining-box">
+                                        <div class="dining-title">
+                                            <i class="fas fa-bed fa-fw"></i>住宿：
+                                        </div>
+                                        <div class="dining-content">
+                                            松風文旅／煙波大飯店宜蘭館／ 或同級
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 出團備註 -->
+                <div class="divider divider-border divider-center"><i class="icon-line-bell"></i></div>
+                <div class="topmargin-sm">
+                    <div class="fancy-title title-bottom-border title-center">
+                        <h3><i class="icon-line-bell"></i>出團備註</h3>
+                        <div class="text-left p-4">
+                            <p>各位貴賓：<br>感謝您參加本公司國內團體，為了使您此行收穫更加豐碩，特將此團體旅遊有關的訊息向您報告，盼能有益您做好行前萬全的準備。同時請您遵守下列事項，這是我們應盡告知的責任，也保障您的權益。
+                            </p>
+                            <p><strong><span style="font-size:20px;">★行前特別提醒：</span></strong></p>
+                            <p>１、根據中華民國交通部觀光局１１０年２月１日公告《旅行業於疫情期間舉辦旅遊時，請配合下列事項辦理》：<span style="color:#FF0000;">有呼吸道症狀者，應儘速就醫後在家休養，避免參加旅遊。有發燒者（耳溫≧３８℃；額溫≧３７．５℃）者，直至未使用解熱劑/退燒藥且不再發燒24小時後，才可參加旅遊，如旅遊開始當日未達此標準，應避免參加。另如屬中央流行疫情指揮中心發布『感染風險民眾追蹤管理機制』之對象，亦應避免參加</span>，隨車服務人員（司機）有權拒絕旅客上車，造成不便，敬請見諒！<br>２、根據中央流行疫情指揮中心１０９年４月１０日修訂《「COVID-19（武漢肺炎）」因應指引：社交距離注意事項》：大眾運輸（含計程車）儘可能保持室內１．５公尺、室外１公尺之社交距離。若正確佩戴口罩，則可豁免社交距離。<span
+                                    style="color:#FF0000;">搭乘大眾交通工具之乘客以及會接觸不特定對象的大眾運輸業者，均應強制全程佩戴口罩。</span>搭乘人數較少時，公車或長途巴士業者可考慮於駕駛後方座位禁止入座，且暫不使用前門上下車。有體溫監測設備之大眾運輸業，禁止載運發燒者。高齡、具慢性病史、進出醫院、自覺有上呼吸道症狀之民眾或不適合佩戴口罩之嬰兒，宜自主避開尖峰時刻之人潮。不得已必須搭乘大眾運輸且不適合佩戴口罩之嬰兒，應以具遮簾之嬰兒車或嬰兒提籃防護飛沫。若未能維持適當社交距離，則禁止在大眾運輸系統內用餐。<br>３、車上座位的編排將以當日出發自由選位，無法事先協助安排車位，敬請見諒。<br>４、為維護旅遊品質及保障其他旅客的權益，參加行程請勿攜帶寵物。<br>５、本行程所載明之車程時間僅供參考，如因當天路況、活動節慶、天候因素或遇假日遊客眾多…等因素，將由導遊及司機視情況調整行程順序前後更動，本公司不另行公告。<br>６、若遇天候不佳或不可抗拒之因素，本公司保有取消或變更行程的權利。<br>７、由於天氣多變，實際行走路線以當日安排為主。<br>８、請穿著適合野外之服裝、運動鞋、拐杖並請視天氣情況攜帶雨具、防曬用具。<br>９、因安全考量，請確定個人身體健康良好，如有心臟病等突發性疾病者，重大疾病、心血管疾病、氣喘病患者、癲癇及孕婦，請勿報名。<br>１０、如有身體不適請自備個人隨身藥品：如暈車藥、感冒藥、防蚊蟲液…等（旅行社人員及領隊無法提供內服藥物）。<br>１１、在活動時間之外，絕對不要擅自接近危險區域，以免因無人照顧而發生意外
+                                。<br>１２、<span style="color:#FF0000;">出門旅遊請務必攜帶個人的身份證、健保卡等證件，</span>以備不時之需或使用特殊交通門票優惠票價以供查驗；部份景點需提供有照片之證件（身份證、駕照、健保卡擇一），以方便管制站人員核對名單，未攜帶者恐將無法進入。<br>１３、自然行程探訪請您一同維護珍貴資源，除了足跡什麼也不留，將美好風光留予後代子孫。
+                            </p>
+                            <p>　</p>
+                            <p><strong><span style="font-size:20px;">★安全守則：</span></strong></p>
+                            <p>１、個人裝備：休閒鞋、相機、私人藥物（暈車、感冒）、防蚊藥水、雨具（以雨衣為佳）、換洗衣物、遮陽帽、防曬油、零用錢…等，並建議穿著輕裝便鞋，方便旅遊活動進行。<br>２、個人貴重物品，請自行保管妥善。<br>３、您的安全是最重要的，請隨時注意自身的安全。如有身體不適或其他症狀，請立刻通知服務人員。<br>４、團體需一起活動，途中若要離隊需徵得服務人員／活動指導員同意以免發生意外。<br>５、為了更安心舒適的旅程，提醒您於每次發車前繫妥安全帶，如有需要協助的地方也請告知隨車服務人員，謝謝！
+                            </p>
+                            <p>　</p>
+                            <p><strong><span style="font-size:20px;">★其他注意事項：</span></strong></p>
+                            <p>１、價格如有調整，以本公司網站公告之新價格為準，恕不另行通知。<br>２、售價說明：每人費用以新台幣計價，此報價為本國籍人士，外籍人士煩請另詢報價。<br>３、請報名此行程的旅客務必提供一支台灣手機聯絡號碼，以利當日隨車服務人員（司機）可與您聯繫接駁事宜（若無法提供建議不要報名此行程）。<br>４、取消規定：本公司作業均遵依照觀光局相關規定，與旅客簽署旅遊契約書，詳細取消規訂請參閱《國內旅遊定型化契約書》。<br>５、任何變更或取消，通知日需以人事行政局公告之正常上班時間為依準，超過時間以下個工作日計算，敬請見諒。<br>６、另外需求英／日語導覽，請洽客服人員，需另外加價。<br>７、本行程網站可售人數非代表成團人數，須依賣況及供應商調度而有增減。線上預約並非保證訂位成功，仍需以客服人員回覆確認為準。
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section><!-- #content end -->
+
+{% endblock %}
+{% block footer_script %}
+
+{% endblock %}

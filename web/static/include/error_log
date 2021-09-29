@@ -1,0 +1,4 @@
+[15-Jun-2018 19:20:20 Asia/Taipei] PHP Warning:  escapeshellcmd() has been disabled for security reasons in /home2/coolkert/public_html/include/phpmailer/src/PHPMailer.php on line 1597
+[15-Jun-2018 19:20:20 Asia/Taipei] PHP Fatal error:  Class 'PHPMailer\PHPMailer\Exception' not found in /home2/coolkert/public_html/include/phpmailer/src/PHPMailer.php on line 1671
+[15-Jun-2018 19:20:42 Asia/Taipei] PHP Warning:  escapeshellcmd() has been disabled for security reasons in /home2/coolkert/public_html/include/phpmailer/src/PHPMailer.php on line 1597
+[15-Jun-2018 19:20:42 Asia/Taipei] PHP Fatal error:  Class 'PHPMailer\PHPMailer\Exception' not found in /home2/coolkert/public_html/include/phpmailer/src/PHPMailer.php on line 1671

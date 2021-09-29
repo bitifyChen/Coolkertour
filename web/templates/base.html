@@ -1,0 +1,300 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-TW">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="author" content="SemiColonWeb"/>
+    <!-- Stylesheets
+    ============================================= -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css"/>
+
+    <!-- One Page Module Specific Stylesheet -->
+    <link rel="stylesheet" href="{% static 'onepage.css' %}" type="text/css"/>
+    <!-- / -->
+
+    <link rel="stylesheet" href="{% static 'css/dark.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/font-icons.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/et-line.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" type="text/css"/>
+
+    <link rel="stylesheet" href="{% static 'css/fonts.css' %}" type="text/css"/>
+
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}" type="text/css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!-- SLIDER REVOLUTION 5.x CSS SETTINGS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'include/rs-plugin/css/settings.css' %}" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'include/rs-plugin/css/layers.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'include/rs-plugin/css/navigation.css' %}">
+    {% block header_css %}
+    {% endblock %}
+    <!-- Document Title
+    ============================================= -->
+    <title>CoolkerTour | 酷客旅遊</title>
+
+    <style>
+        .priceBtnList {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .priceBtn {
+            box-sizing: border-box;
+            flex-basis: 20%;
+            min-width: 90px;
+            background-color: white;
+            border-radius: 3px;
+            border-bottom: 3px solid rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            margin-right: 5%;
+            margin-bottom: 5%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .priceBtn span {
+            display: block;
+        }
+
+        .priceBtn span.adult {
+            font-weight: 700;
+        }
+
+        .priceBtn span.price {
+            font-weight: 900;
+            color: #1ABC9C;
+        }
+
+        .priceBtn span.price:before {
+            content: "$";
+        }
+
+        .day-box {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .day-box + .day-box {
+            margin-top: 30px;
+        }
+
+        .day-box .day-title {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 10px;
+        }
+
+        .day-box .day-title .day-num {
+            font-size: 30px;
+            flex: 0 0 120px;
+            box-sizing: border-box;
+            border-right: 1px solid black;
+        }
+
+        .day-box .day-title .day-num:before {
+            content: '第';
+        }
+
+        .day-box .day-title .day-num:after {
+            content: '天';
+        }
+
+        .day-box .day-title .day-trips {
+            padding-left: 10px;
+            flex: 1 1;
+        }
+
+        .day-trips .day-trip {
+            font-size: 18px;
+        }
+
+        .day-trips .day-trip + .day-trip:before {
+            content: ' → '
+        }
+
+        .day-box .day-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .day-box .day-body .day-trip {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .day-box .day-body .day-trip .day-trip-img {
+            flex: 0 0 40%;
+        }
+
+        .day-box .day-body .day-trip .day-trip-info {
+            flex: 1 1 60%;
+            padding: 0 20px;
+        }
+
+        .day-box .day-body .day-trip .day-trip-info .title {
+            text-align: center;
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .day-box .day-footer .day-trip-notice {
+            padding: 0px 40px;
+            border-left: 5px solid #1ABC9C;
+        }
+
+        .day-box .day-footer .day-trip-dining {
+            padding: 0px 40px;
+            border-left: 5px solid #1ABC9C;
+        }
+
+        .day-trip-dining .dining-boxs {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .day-trip-dining .dining-boxs .dining-box {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            flex-basis: 50%;
+            min-width: 250px;
+        }
+
+        .dining-box .dining-title {
+
+            font-weight: 700;
+            font-size: 20px;
+            flex: 0 0 40%;
+        }
+
+        .dining-box .dining-title i {
+            margin-right: 5px;
+        }
+
+        .dining-box .dining-content {
+            flex: 1 1 60%;
+        }
+
+        {% block header_style %}
+        {% endblock %}
+    </style>
+
+</head>
+<body class="stretched">
+
+<div id="fb-root"></div>
+
+<!-- Document Wrapper
+============================================= -->
+<div id="wrapper" class="clearfix">
+
+    <!-- Header
+    ============================================= -->
+    <header id="header" class="full-header transparent-header not-dark static-sticky" data-sticky-class="not-dark"
+            data-sticky-offset="200">
+        <div id="header-wrap">
+            <div class="container clearfix">
+                <div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
+
+                <!-- Logo
+                ============================================= -->
+                <div id="logo">
+                    <a href="{% url 'index' %}" class="standard-logo"
+                       data-dark-logo="{% static 'images/canvasone-dark.png' %}"><img
+                            src="{% static 'images/canvasone.png' %}" alt="Canvas Logo"></a>
+                    <a href="{% url 'index' %}" class="retina-logo"
+                       data-dark-logo="{% static 'images/canvasone-dark@2x.png' %}"><img
+                            src="{% static 'images/canvasone@2x.png' %}" alt="Canvas Logo"></a>
+                </div><!-- #logo end -->
+
+                <!-- Primary Navigation
+                ============================================= -->
+                <nav id="primary-menu">
+                    <ul class="one-page-menu" data-easing="easeInOutExpo" data-speed="1250" data-offset="65">
+                        <li><a href="{% url 'index' %}">
+                            <div>回首頁</div>
+                        </a></li>
+                        <li><a href="{% url 'album' %}">
+                            <div>客戶案例</div>
+                        </a></li>
+                        <li><a href="{% url 'index' %}#section-services">
+                            <div>關於酷客</div>
+                        </a></li>
+                        <li><a href="{% url 'tour' %}">
+                            <div>嗨，想去哪玩</div>
+                        </a></li>
+                        <li><a href="{% url 'shop' %}">
+                            <div>最新行程</div>
+                        </a></li>
+                        <li><a href="{% url 'index' %}#section-contact">
+                            <div>找到酷客</div>
+                        </a></li>
+                        <li><a href="http://cooltour.com.tw/Login.aspx">
+                            <div>企業登入</div>
+                        </a></li>
+                    </ul>
+                </nav><!-- #primary-menu end -->
+            </div>
+        </div>
+    </header><!-- #header end -->
+
+
+    {% block main_body %}
+    {% endblock %}
+    <!-- Footer============================================= -->
+    {% include 'footer.html' %}
+    <!-- #footer end -->
+
+</div><!-- #wrapper end -->
+
+<!-- Go To Top
+============================================= -->
+<div id="gotoTop" class="icon-angle-up"></div>
+
+<!-- External JavaScripts
+============================================= -->
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/plugins.js' %}"></script>
+
+<!-- Footer Scripts
+============================================= -->
+<script src="{% static 'js/functions.js' %}"></script>
+<script src="https://kit.fontawesome.com/27a56fd160.js" crossorigin="anonymous"></script>
+<script>
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=499481203443583&version=v2.0";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+</script>
+<script src="{% static "js/noty/packaged/jquery.noty.packaged.js" %}"></script>
+<script>
+    {% if messages %}
+        {% for message in messages %}
+            noty({theme: 'relax', type: '{{ message.tags }}', text: '{{ message }}', timeout: 5000});
+        {% endfor %}
+    {% endif %}
+</script>
+{% block footer_script %}
+{% endblock %}
+</body>
+</html>
+
+
+

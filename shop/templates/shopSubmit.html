@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load cropping %}
+{% load tour_tag %}
+{% block main_body %}
+    <section id="content">
+        <div class="content-wrap">
+            <div class="container clearfix">
+                <div class="table-responsive">
+                    <table class="table cart">
+                        <thead>
+                        <tr>
+                            <th class="cart-product-name">品項</th>
+                            <th class="cart-product-room">品項</th>
+                            <th class="cart-product-price">單價</th>
+                            <th class="cart-product-quantity">數量</th>
+                            <th class="cart-product-subtotal">小計</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="cart_item">
+                            <td class="cart-product-name">
+                                宜蘭童話仙境１天、６人成行～明池森林、蕨園神木迷宮步道、清水地熱
+                            </td>
+                            <td class="cart-product-room">
+                                大人（單人房)
+                            </td>
+                            <td class="cart-product-price">
+                                <span class="amount">$2000</span>
+                            </td>
+                            <td class="cart-product-quantity">
+                                <div class="quantity clearfix">
+                                    <input type="button" value="-" class="minus">
+                                    <input type="text" name="quantity" value="3" class="qty"/>
+                                    <input type="button" value="+" class="plus">
+                                </div>
+                            </td>
+
+                            <td class="cart-product-subtotal">
+                                <span class="amount">$2000</span>
+                            </td>
+                        </tr>
+                        <tr class="cart_item">
+                            <td class="cart-product-name">
+                                宜蘭童話仙境１天、６人成行～明池森林、蕨園神木迷宮步道、清水地熱
+                            </td>
+                            <td class="cart-product-room">
+                                大人（雙人房)
+                            </td>
+                            <td class="cart-product-price">
+                                <span class="amount">$2000</span>
+                            </td>
+
+                            <td class="cart-product-quantity">
+                                <div class="quantity clearfix">
+                                    <input type="button" value="-" class="minus">
+                                    <input type="text" name="quantity" value="3" class="qty"/>
+                                    <input type="button" value="+" class="plus">
+                                </div>
+                            </td>
+
+                            <td class="cart-product-subtotal">
+                                <span class="amount">$2000</span>
+                            </td>
+                        </tr>
+                        <tr class="cart_item">
+                            <td class="cart-product-name">
+                                宜蘭童話仙境１天、６人成行～明池森林、蕨園神木迷宮步道、清水地熱
+                            </td>
+                            <td class="cart-product-room">
+                                大人（三人房)
+                            </td>
+                            <td class="cart-product-price">
+                                <span class="amount">$2000</span>
+                            </td>
+
+                            <td class="cart-product-quantity">
+                                <div class="quantity clearfix">
+                                    <input type="button" value="-" class="minus">
+                                    <input type="text" name="quantity" value="3" class="qty"/>
+                                    <input type="button" value="+" class="plus">
+                                </div>
+                            </td>
+
+                            <td class="cart-product-subtotal">
+                                <span class="amount">$2000</span>
+                            </td>
+                        </tr>
+                        <tr class="cart_item">
+                            <td class="cart-product-name">
+                                宜蘭童話仙境１天、６人成行～明池森林、蕨園神木迷宮步道、清水地熱
+                            </td>
+                            <td class="cart-product-room">
+                                小孩（不佔床)
+                            </td>
+                            <td class="cart-product-price">
+                                <span class="amount">$2000</span>
+                            </td>
+
+                            <td class="cart-product-quantity">
+                                <div class="quantity clearfix">
+                                    <input type="button" value="-" class="minus">
+                                    <input type="text" name="quantity" value="3" class="qty"/>
+                                    <input type="button" value="+" class="plus">
+                                </div>
+                            </td>
+
+                            <td class="cart-product-subtotal">
+                                <span class="amount">$2000</span>
+                            </td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+
+                <div class="row clearfix">
+                    <div class="col-lg-6 clearfix">
+                        <h4>訂購人基本資料</h4>
+                        <div class="form-group">
+                            <label for="form-name">姓名:</label>
+                            <input type="text" class="form-control sm-form-control" id="form-name"
+                                   placeholder="訂購人姓名" name="form-name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="form-phone">電話：</label>
+                            <input type="text" id="form-phone" name="form-phone"
+                                   class="form-control sm-form-control"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="form-email">電子信箱:</label>
+                            <div class="input-group mb-3">
+                                <input type="email" id="form-email" name="form-email" class="form-control sm-form-control">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="button">取得驗證碼</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col_full mb-1">
+                            <label for="billing-form-email">認證碼:</label>
+                            <input type="email" id="billing-form-email" name="billing-form-email" value=""
+                                   class="sm-form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 clearfix">
+                        <h4>訂單總計</h4>
+
+                        <div class="table-responsive">
+                            <table class="table cart">
+                                <tbody>
+                                <tr class="cart_item">
+                                    <td class="cart-product-name">
+                                        <strong>應付訂金</strong>
+                                    </td>
+
+                                    <td class="cart-product-name">
+                                        <span class="amount">$2000</span>
+                                    </td>
+                                </tr>
+
+                                <tr class="cart_item">
+                                    <td class="cart-product-name">
+                                        <strong>合計金額</strong>
+                                    </td>
+
+                                    <td class="cart-product-name">
+                                        <span class="amount color lead"><strong>$2000</strong></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <a href="#" class="button button-rounded btn-block text-center" style="width:100%;overflow:hidden">送出訂單</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- #content end -->
+{% endblock %}
+{% block footer_script %}
+
+{% endblock %}

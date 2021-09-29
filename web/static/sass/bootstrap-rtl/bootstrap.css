@@ -1,0 +1,5 @@
+
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: File to import not found or unreadable: mixins/breakpoints.\A        Load path: /Applications/XAMPP/xamppfiles/htdocs/canvas/html-v6-sass/sass/bootstrap-rtl\A         on line 12 of /Applications/XAMPP/xamppfiles/htdocs/canvas/html-v6-sass/sass/bootstrap-rtl/_mixins-rtl.scss\A         from line 44 of /Applications/XAMPP/xamppfiles/htdocs/canvas/html-v6-sass/sass/bootstrap-rtl/bootstrap-rtl.scss\A \A 7: \A 8: @import \"../variables\";\A 9: \A 10: @import \"mixins/reset-text-rtl\";\A 11: @import \"mixins/pagination-rtl\";\A 12: @import \"mixins/lists-rtl\";\A 13: @import \"mixins/grid-rtl\";\A 14: @import \"mixins/grid-framework-rtl\";\A 15: @import \"mixins/forms-rtl\";\A 16: @import \"mixins/float-rtl\";\A 17: @import \"mixins/caret-rtl\";"; }

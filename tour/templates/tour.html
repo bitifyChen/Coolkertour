@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load cropping %}
+{% load tour_tag %}
+{% block main_body %}
+    <section id="page-title" class=" page-title-parallax page-title-dark" style="background-image: url('{% static 'photo/slider/bg-1.jpg' %}'); background-size: cover; padding: 120px 0;" data-bottom-top="background-position:0px 0px;" data-top-bottom="background-position:0px -300px;">
+        <div class="container clearfix" style="text-align: center;">
+            <h2 style="color: #ffffff">嗨，想去哪玩</h2>
+            <a href="{% url 'tour' %}" class="button button-large button-circle button-border button-leaf"><i class="icon-bookmark2"></i>國內旅遊</a>
+            <a href="{% url 'tour' %}?foreign=1" class="button button-large button-circle button-border button-pink"><i class="icon-plane"></i>國外旅遊</a>
+        </div>
+    </section>
+    <!-- Content
+    ============================================= -->
+    <section id="content">
+        <div class="content-wrap">
+            <div class="container clearfix">
+                <!-- Post Content
+                ============================================= -->
+                <div class="postcontent nobottommargin col_last">
+                    <!-- Shop
+                    ============================================= -->
+                    <div id="shop" class="shop product-3 grid-container clearfix">
+                        <!-- 圖片大小為像素320*180-->
+                        {% for tour in tours %}
+                            <div class="product clearfix {{ tour.category.filter }}">
+                                <div class="product-image">
+                                    <a href="{% url 'tour_detail' tour.id %}"><img src="{% cropped_thumbnail tour "crop_photo1" %}"></a>
+                                    <a href="{% url 'tour_detail' tour.id %}"><img src="{% cropped_thumbnail tour "crop_photo2" %}"></a>
+                                    {% if tour.day_ct %}
+                                    <div class="sale-flash">{{ tour.day_ct }}日遊</div>
+                                    {% endif %}
+                                </div>
+                                <div class="product-desc center">
+                                    <div class="product-title"><h3><a href="{% url 'tour_detail' tour.id %}">{{ tour.name }}</a></h3></div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div><!-- #shop end -->
+                </div><!-- .postcontent end -->
+                <!-- Sidebar
+                ============================================= -->
+                <div class="sidebar nobottommargin">
+                    <div class="sidebar-widgets-wrap">
+                        <div class="widget widget-filter-links clearfix">
+                            <h3>{% if foreign %}國外旅遊{% else %}國內旅遊{% endif %}</h3>
+                            <ul class="custom-filter" data-container="#shop" data-active-class="active-filter">
+                                <li class="widget-filter-reset active-filter"><a href="#" data-filter="*">查看全部</a></li>
+                                {% for area in areas %}
+                                    {% get_tour_counts area.filter as tour_counts %}
+                                    {% if tour_counts > 0 %}
+                                        <li><a href="#" data-filter=".{{ area.filter }}">{{ area.name }}</a><span>{{ tour_counts }}</span></li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div><!-- .sidebar end -->
+            </div>
+        </div>
+    </section><!-- #content end -->
+{% endblock %}
+
+
+{% block footer_script %}
+    <script>
+        $( document ).ready(function() {
+            let url = window.location.href.split("#");
+            let filter = url[url.length-1];
+            $('#shop').isotope({ filter: '.'+filter });
+        });
+    </script>
+{% endblock %}

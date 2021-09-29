@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load cropping %}
+{% load tour_tag %}
+{% block main_body %}
+    <section id="page-title">
+        <div class="container clearfix">
+            <h1>{{ obj_album.name }}</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">首頁</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'album' %}">客戶案例</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ obj_album.name }}</li>
+            </ol>
+        </div>
+    </section><!-- #page-title end -->
+    <section id="content">
+        <div class="content-wrap">
+            <div class="container clearfix">
+                {% if obj_album.description %}
+                <blockquote>
+                    <p>{{ obj_album.description }}</p>
+                </blockquote>
+                {% endif %}
+                <div class="col_full clearfix">
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'album_upload' obj_album.id  %}" class="button button-border button-rounded button-fill button-aqua">
+                            <span>上傳照片</span>
+                        </a>
+                    {% endif %}
+                    <a href="#" data-toggle="modal" data-target="#exampleModal" id="download-all" class="button button-border button-rounded button-fill button-aqua">
+                        <span>下載照片</span>
+                    </a>
+                    <div class="masonry-thumbs grid-4" data-big="" data-lightbox="gallery">
+                        {% for photo in photos %}
+                            <a href="{{ photo.photo.url }}" data-lightbox="gallery-item"><img class="image_fade" src="{{ photo.square_banner.url }}" alt=""></a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: white;">
+          <div class="modal-body">
+              <h4>企業客戶照片下載(.zip)</h4>
+                <p>本資料僅限所屬公司下載，請輸入密碼開始下載照片(密碼請與本公司或業務查詢)。</p>
+              <hr>
+              <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">認證碼</label>
+                <div class="col-sm-10">
+                    {% csrf_token %}
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <a href="#" class="button button-border button-border-thin button-pink" data-dismiss="modal">離開</a>
+              <button type="button" class="button button-border button-border-thin button-aqua" onclick="passwordcheck()">下載照片</button>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+{% block footer_script %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip-utils/0.1.0/jszip-utils.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+    <script>
+        $('#download-all').click(function (){
+            });
+        var links = [];
+        {% for photo in photos %}
+            links.push('{{ photo.photo.url }}');
+        {% endfor %}
+        function passwordcheck(){
+            const typepw = $('#inputPassword').val();
+            $.ajax({
+                url: '{% url 'album_verify' obj_album.id %}',
+                method: 'GET',
+                headers: {'X-CSRFToken': $('input[name="csrfmiddlewaretoken"]').val()},
+                data: {'password': typepw},
+                contentType: 'application/json',
+                success: function (res) {
+                    if(res.msg === 'success'){
+                        noty({theme: 'relax',layout: 'topCenter',type:'success',text: '即將開始下載，因圖片數量大小不同，請耐心等候。', timeout: 5000});
+                        generateZIP();
+                    }
+                    else if (res.msg === 'empty'){
+                        noty({theme: 'relax',layout: 'topCenter',type:'error',text: '認證碼不得為空', timeout: 5000});
+                    }
+                    else if (res.msg === 'wrong'){
+                        noty({theme: 'relax',layout: 'topCenter',type:'error',text: '認證碼錯誤', timeout: 5000});
+                    }
+                    else {
+                        noty({theme: 'relax',layout: 'topCenter',type:'error',text: '發生錯誤，請聯絡管理員', timeout: 5000});
+                    }
+                }
+            });
+        }
+        function generateZIP() {
+          var zip = new JSZip();
+          var count = 0;
+          var zipFilename = "酷客旅行社團體相簿-{{ obj_album.name }}";
+
+          links.forEach(function (url, i) {
+            var filename = links[i];
+            JSZipUtils.getBinaryContent(url, function (err, data) {
+              if (err) {
+                throw err;
+              }
+              zip.file('酷客照片'+ [i] +'.jpg',data, { binary: true });
+              count++;
+              if (count === links.length) {
+                zip.generateAsync({ type: 'blob' }).then(function (content) {
+                  saveAs(content, zipFilename);
+                });
+              }
+            });
+          });
+        }
+    </script>
+{% endblock %}

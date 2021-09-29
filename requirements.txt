@@ -1,0 +1,11 @@
+Django==2.2.15
+django-ckeditor
+django-cleanup
+django-image-cropping
+django-imagekit
+easy-thumbnails
+mysqlclient
+Pillow
+ExifRead
+pilkit
+requests
