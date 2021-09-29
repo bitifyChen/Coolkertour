@@ -4,6 +4,7 @@
 {% load tour_tag %}
 {% block main_body %}
     {% include "cms/cms_bar.html" %}
+
     <section id="app">
         <div class="container">
             <form>
@@ -141,73 +142,7 @@
                         <div class="modal-body">
                             <div class="modal-content border-0" style="background-color: white;">
                                 <!-------------------------------------------表單內容--------------------------------------->
-                                <div class="modal-body">
-                                    <h3 class="mb-1"><span class="badge badge-pill badge-success">行程</span></h3>
-                                    <select class="form-control js-example-basic-single" name="state"
-                                            id="scheduleSearch"></select>
-                                    <button class="btn btn-secondary col-sm-2" type="button" @click="scheduleAdd">
-                                        加入
-                                    </button>
-
-                                    <div class="alert alert-info mb-1" v-for="(daySchedule,index) in dayScheduleList">
-										<input :id="index" class="radio-style" name="radio-group-3" type="checkbox" v-model="daySchedule.show">
-										<label :for="index" class="radio-style-3-label" style="color:white">[[ daySchedule.name ]]</label>
-                                        <button type="button" class="close" @click="scheduleDel(daySchedule.id)">x
-                                        </button>
-                                        <div>
-                                        </div>
-                                    </div>
-
-
-                                    <h3 class="mb-1"><span class="badge badge-pill badge-success">備註</span></h3>
-                                    <div class="form-group row">
-                                        <label for="dayRemark" class="col-sm-2 col-form-label">備註</label>
-                                        <div class="col-sm-10">
-                                            <textarea v-model="dayRemark" class="form-control" rows="4" id="dayRemark"
-                                                      placeholder="08:00～08:10 台北車站南一門集合出發、帶著愉快的心情開啟宜花之旅&#13;&#10;10:00~11:00 台泥DAKA&#13;&#10;12:00~16:00 太魯閣國家公園&#13;&#10;17:30 飯店CHECK IN&#13;&#10;（途中將依實際狀況調整景點停留時間）"></textarea>
-                                        </div>
-                                    </div>
-                                    <h3 class="mb-1"><span class="badge badge-pill badge-success">用餐</span></h3>
-
-                                    <div class="form-group row">
-                                        <label for="dayBreakfast" class="col-sm-2 col-form-label">早餐</label>
-                                        <div class="col-sm-10">
-                                            <input v-model="dayDining.breakfast" type="text" class="form-control"
-                                                   id="dayBreakfast">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="dayLunch" class="col-sm-2 col-form-label">中餐</label>
-                                        <div class="col-sm-10">
-                                            <input v-model="dayDining.lunch" type="text" class="form-control"
-                                                   id="dayLunch">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="dayDinner" class="col-sm-2 col-form-label">晚餐</label>
-                                        <div class="col-sm-10">
-                                            <input v-model="dayDining.dinner" type="text" class="form-control"
-                                                   id="dayDinner">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="dayHotel" class="col-sm-2 col-form-label">住宿</label>
-                                        <div class="col-sm-10">
-                                            <input v-model="dayDining.hotel" type="text" class="form-control"
-                                                   id="dayHotel"
-                                                   placeholder="松風文旅／煙波大飯店宜蘭館／ 或同級">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-------------------------------------------表單內容--------------------------------------->
-                                <div class="modal-footer border-top-0">
-                                    <button type="button" class="button button-3d button-pink button-rounded"
-                                            data-dismiss="modal" aria-hidden="true"><i class="icon-trash2"></i>取消
-                                    </button>
-                                    <button type="button" class="button button-3d button-rounded"><i
-                                            class="icon-ok"></i>確認新增
-                                    </button>
-                                </div>
+                                <schedule-component></schedule-component>
                             </div>
                         </div>
                     </div>
@@ -318,19 +253,87 @@
     </script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js'></script>
     <script>
-        let vm = new Vue({
+        Vue.component("scheduleComponent", {
             delimiters: ['[[', ']]'],
-            el: "#app",
-            data: {
-                dayScheduleList: [],
-                dayDining: {
-                    breakfast: '敬請自理',
-                    lunch: '敬請自理',
-                    dinner: '敬請自理',
-                    hotel: ''
-                },
-                dayRemark: '',
+            data() {
+                return {
+                    dayScheduleList: [],
+                    dayDining: {
+                        breakfast: '敬請自理',
+                        lunch: '敬請自理',
+                        dinner: '敬請自理',
+                        hotel: ''
+                    },
+                    dayRemark: '',
+                };
             },
+            template: `
+            <div>
+                <div class="modal-body">
+                    <h3 class="mb-1"><span class="badge badge-pill badge-success">行程</span></h3>
+                    <select class="form-control js-example-basic-single" name="state"
+                            id="scheduleSearch"></select>
+                    <button class="btn btn-secondary col-sm-2" type="button" @click="scheduleAdd">
+                        加入
+                    </button>
+                    <div class="alert alert-info mb-1" v-for="(daySchedule,index) in dayScheduleList">
+                        <input :id="index" class="radio-style" name="radio-group-3" type="checkbox"
+                               v-model="daySchedule.show">
+                        <label :for="index" class="radio-style-3-label" style="color:white">[[
+                            daySchedule.name ]]</label>
+                        <button type="button" class="close" @click="scheduleDel(daySchedule.id)">x
+                        </button>
+                    </div>
+                    <h3 class="mb-1"><span class="badge badge-pill badge-success">備註</span></h3>
+                    <div class="form-group row">
+                        <label for="dayRemark" class="col-sm-2 col-form-label">備註</label>
+                        <div class="col-sm-10">
+                            <textarea v-model="dayRemark" class="form-control" rows="4" id="dayRemark"
+                                      placeholder="08:00～08:10 台北車站南一門集合出發、帶著愉快的心情開啟宜花之旅&#13;&#10;10:00~11:00 台泥DAKA&#13;&#10;12:00~16:00 太魯閣國家公園&#13;&#10;17:30 飯店CHECK IN&#13;&#10;（途中將依實際狀況調整景點停留時間）"></textarea>
+                        </div>
+                    </div>
+                    <h3 class="mb-1"><span class="badge badge-pill badge-success">用餐</span></h3>
+
+                    <div class="form-group row">
+                        <label for="dayBreakfast" class="col-sm-2 col-form-label">早餐</label>
+                        <div class="col-sm-10">
+                            <input v-model="dayDining.breakfast" type="text" class="form-control"
+                                   id="dayBreakfast">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="dayLunch" class="col-sm-2 col-form-label">中餐</label>
+                        <div class="col-sm-10">
+                            <input v-model="dayDining.lunch" type="text" class="form-control"
+                                   id="dayLunch">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="dayDinner" class="col-sm-2 col-form-label">晚餐</label>
+                        <div class="col-sm-10">
+                            <input v-model="dayDining.dinner" type="text" class="form-control"
+                                   id="dayDinner">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="dayHotel" class="col-sm-2 col-form-label">住宿</label>
+                        <div class="col-sm-10">
+                            <input v-model="dayDining.hotel" type="text" class="form-control"
+                                   id="dayHotel"
+                                   placeholder="松風文旅／煙波大飯店宜蘭館／ 或同級">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0">
+                    <button type="button" class="button button-3d button-pink button-rounded"
+                            data-dismiss="modal" aria-hidden="true"><i class="icon-trash2"></i>取消
+                    </button>
+                    <button type="button" class="button button-3d button-rounded"><i
+                            class="icon-ok"></i>確認新增
+                    </button>
+                </div>
+            </div>
+          `,
             methods: {
                 scheduleAdd() {
                     let schedule = $('#scheduleSearch').select2('data')[0];
@@ -347,7 +350,13 @@
                 scheduleDel(id) {
                     this.dayScheduleList = this.dayScheduleList.filter((daySchedule) => daySchedule.id != id)
                 },
-            },
+            }
+        });
+        let vm = new Vue({
+            delimiters: ['[[', ']]'],
+            el: "#app",
+            data: {},
+            methods: {},
             computed: {}
         });
     </script>
