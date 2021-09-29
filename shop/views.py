@@ -1,3 +1,4 @@
+from easy_thumbnails.files import get_thumbnailer
 from django.shortcuts import render
 from shop.models import TourComponent
 
@@ -20,5 +21,6 @@ def shop_cms(request):
 def shop_cms_add(request):
     tourComponentList = []
     for c in TourComponent.objects.all():
-        tourComponentList.append({'id': c.id, 'text': c.title})
+        thumbnail_url = get_thumbnailer(c.photo).get_thumbnail({'size': (320, 180),'box': c.crop_photo,'crop': True,'detail': True,}).url
+        tourComponentList.append({'id': c.id, 'text': c.title,'description':c.description,'banner':thumbnail_url})
     return render(request, "cms/add.html", locals())
