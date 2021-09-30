@@ -70,68 +70,51 @@
 
                 <!----------------------------行程金額---------------------------->
                 <h3>出團日期與金額</h3>
-                <h4 class="mb-1"><span class="badge badge-pill badge-success">相關日期設定</span></h4>
-                <div class="form-group row">
-                    <label for="itemListingDate" class="col col-form-label">上架日期</label>
-                    <div class="col">
-                        <input type="date" class="form-control" id="itemListingDate">
+                <!------------------------日期modal-------------------->
+                <div class="modal fade dateModal">
+                    <date-add-component
+                            :editing-data="dateEditing"
+                            @submit="dateAddHandler">
+                    </date-add-component>
+                </div>
+                <div class="section topmargin-sm p-4">
+                    <div class="container">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>編輯</th>
+                                    <th>刪除</th>
+                                    <th>上架日期</th>
+                                    <th>截止日期</th>
+                                    <th>出團日期</th>
+                                    <th>大人(單)</th>
+                                    <th>大人(雙)</th>
+                                    <th>大人(三)</th>
+                                    <th>大人(四)</th>
+                                    <th>小孩(X)</th>
+                                    <th>小孩(床)</th>
+                                    <th>嬰兒</th>
+                                    <th>人數</th>
+                                    <th>備註</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr is="date-component"
+                                    v-for="date in dateList"
+                                    :date-data="date"
+                                    @edit="dateEditHandler"
+                                    @del="dateDelHandler"
+                                ></tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="itemDeadlineDate" class="col col-form-label">截止日期</label>
-                    <div class="col">
-                        <input type="date" class="form-control" id="itemDeadlineDate">
-                    </div>
+                <div class="button button-3d button-rounded w-100 center" data-toggle="modal"
+                     data-target=".dateModal"><i class="icon-map-marker2"></i>新增出團日期
                 </div>
-                <div class="form-group row">
-                    <label for="itemDate" class="col col-form-label">出團日期</label>
-                    <div class="col">
-                        <input type="date" class="form-control" id="itemDate">
-                    </div>
-                </div>
-                <h4 class="mb-1"><span class="badge badge-pill badge-success">房型金額設定</span></h4>
-                <div class="form-group row">
-                    <label for="itemPrice1" class="col col-form-label">大人（單人房）</label>
-                    <div class="col">
-                        <input type="number" class="form-control" id="itemPrice1" placeholder="請填寫金額，如未有此房型請留空。">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="itemPrice1" class="col col-form-label">大人（雙人房）</label>
-                    <div class="col">
-                        <input type="number" class="form-control" id="itemPrice1" placeholder="請填寫金額，如未有此房型請留空。">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="itemPrice1" class="col col-form-label">大人（三人房）</label>
-                    <div class="col">
-                        <input type="number" class="form-control" id="itemPrice1" placeholder="請填寫金額，如未有此房型請留空。">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="itemPrice1" class="col col-form-label">大人（四人房）</label>
-                    <div class="col">
-                        <input type="number" class="form-control" id="itemPrice1" placeholder="請填寫金額，如未有此房型請留空。">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="itemPrice1" class="col col-form-label">小孩（未佔床）</label>
-                    <div class="col">
-                        <input type="number" class="form-control" id="itemPrice1" placeholder="請填寫金額，如未有此房型請留空。">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="itemPrice1" class="col col-form-label">小孩（含床位）</label>
-                    <div class="col">
-                        <input type="number" class="form-control" id="itemPrice1" placeholder="請填寫金額，如未有此房型請留空。">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="itemPrice1" class="col col-form-label">嬰兒</label>
-                    <div class="col">
-                        <input type="number" class="form-control" id="itemPrice1" placeholder="請填寫金額，如未有此房型請留空。">
-                    </div>
-                </div>
+                <div class="line"></div>
 
                 <!----------------------------送出---------------------------->
                 <h3>訂單訂金設定</h3>
@@ -182,7 +165,7 @@
             data() {
                 return scheduleOrgData();
             },
-            props:['editingData'],
+            props: ['editingData'],
             template: `
             <div class="modal-dialog modal-lg">
                         <div class="modal-body">
@@ -286,9 +269,9 @@
                     $('.scheduleModal').modal('toggle');
                 },
             },
-            watch:{
+            watch: {
                 //如果有送入編輯之資料
-                editingData(){
+                editingData() {
                     const data = this.editingData;
                     Object.keys(data).forEach(k => this[k] = data[k]);
                 }
@@ -373,9 +356,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" class="button button-3d button-pink button-rounded" @click="scheduleDayEdit"><i class="icon-trash2"></i>編輯</button>
-                                <button type="button" class="button button-3d button-pink button-rounded" @click="scheduleDayDel"><i class="icon-trash2"></i>刪除</button>
                             </div>
+                            <button type="button"  class="inline-button button button-mini button-circle button-amber w-25 mt-2"  @click="scheduleDayEdit">編輯</button>
+                            <button type="button"  class="inline-button button button-mini button-circle button-pink w-25"   @click="scheduleDayDel">刪除</button>
                         </div>
                     </div>`,
             methods: {
@@ -387,13 +370,178 @@
                 }
             }
         });
+        const dateOrgData = () => {
+            return {
+                dateData: {
+                    dates: {
+                        open: '',
+                        close: '',
+                        outset: '',
+                    },
+                    prices: [
+                        {
+                            name: '大人（單人房)',
+                            price: '',
+                        },
+                        {
+                            name: '大人（雙人房）',
+                            price: '',
+                        },
+                        {
+                            name: '大人（三人房）',
+                            price: '',
+                        },
+                        {
+                            name: '大人（四人房）',
+                            price: '',
+                        },
+                        {
+                            name: '小孩（未佔床）',
+                            price: '',
+                        },
+                        {
+                            name: '小孩（含床位）',
+                            price: '',
+                        },
+                        {
+                            name: '嬰兒',
+                            price: '',
+                        },
+                    ],
+                    infos: {
+                        number: '',
+                        remark: '',
+                    }
+                }
+            };
+        };
+        Vue.component("dateAddComponent", {
+            delimiters: ['[[', ']]'],
+            data() {
+                return dateOrgData();
+            },
+            props: ['editingData'],
+            template: `
+             <div class="modal-dialog modal-lg">
+                <div class="modal-body">
+                    <div class="modal-content border-0" style="background-color: white;">
+                        <div class="modal-body">
+                            <h4 class="mb-1"><span class="badge badge-pill badge-success">相關日期設定</span></h4>
+                               <div class="form-group row">
+                                   <label for="openDate" class="col col-form-label">上架日期</label>
+                                   <div class="col">
+                                       <input type="date" class="form-control" id="openDate" v-model="dateData.dates.open" >
+                                   </div>
+                               </div>
+                               <div class="form-group row">
+                                   <label for="closeDate" class="col col-form-label">截止日期</label>
+                                   <div class="col">
+                                       <input type="date" class="form-control" id="closeDate" v-model="dateData.dates.close">
+                                   </div>
+                               </div>
+                               <div class="form-group row">
+                                   <label for="outsetDate" class="col col-form-label">出團日期</label>
+                                   <div class="col">
+                                       <input type="date" class="form-control" id="outsetDate" v-model="dateData.dates.outset">
+                                   </div>
+                               </div>
+                               <h4 class="mb-1"><span class="badge badge-pill badge-success">房型金額設定</span></h4>
+                               <div class="form-group row" v-for="priceSet in dateData.prices">
+                                   <label :for="priceSet.name" class="col col-form-label">[[priceSet.name]]</label>
+                                   <div class="col">
+                                       <input type="number" class="form-control" :id="priceSet.name" placeholder="請填寫金額，如未有此房型請留空。" v-model="priceSet.price">
+                                   </div>
+                               </div>
+                               <h4 class="mb-1"><span class="badge badge-pill badge-success">其他設定</span></h4>
+                               <div class="form-group row">
+                                   <label for="outsetDate" class="col col-form-label">人數上限</label>
+                                   <div class="col">
+                                       <input type="number" class="form-control" id="outsetDate" v-model="dateData.infos.number">
+                                   </div>
+                               </div>
+                               <div class="form-group row">
+                                   <label for="outsetDate" class="col col-form-label">出團備註</label>
+                                   <div class="col">
+                                       <input type="text" class="form-control" id="outsetDate" v-model="dateData.infos.remark">
+                                   </div>
+                               </div>
+                            </div>
+                        <div class="modal-footer border-top-0">
+                            <button type="button" class="button button-3d button-pink button-rounded"data-dismiss="modal" aria-hidden="true">
+                                <i class="icon-trash2"></i>取消
+                            </button>
+                            <button type="button" class="button button-3d button-amber button-rounded"@click="dateClear">
+                                <i class="icon-trash2"></i>清除
+                            </button>
+                            <button type="button" class="button button-3d button-rounded" @click="dateSubmit">
+                                <i class="icon-ok"></i>確認
+                            </button>
+                        </div>
+                    </div>
+                </div>
+             </div>
+             `,
+            methods: {
+                dateClear() {
+                    const data = dateOrgData();
+                    Object.keys(data).forEach(k => this[k] = data[k]);
+                },
+                dateSubmit() {
+                    this.$emit('submit', this.dateData);
+                    this.dateClear();
+                    $('.dateModal').modal('toggle');
+                },
+            },
+            watch: {
+                //如果有送入編輯之資料
+                editingData() {
+                    const data = this.editingData;
+                    Object.keys(data).forEach(k => this.dateData[k] = data[k]);
+                }
+            }
+        })
+
+        Vue.component("dateComponent", {
+            delimiters: ['[[', ']]'],
+            data() {
+                return {}
+            },
+            props: ['dateData'],
+            template: `<tr>
+                        <td class="p-0">
+                            <button type="button"  class="button button-mini button-circle button-amber"  @click="dateEdit">編輯</button>
+                        </td>
+                        <td class="p-0">
+                            <button type="button"  class="button button-mini button-circle button-pink"   @click="dateDel">刪除</button>
+                        </td>
+                        <td>[[ dateData.dates.open ]]</td>
+                        <td>[[ dateData.dates.close ]]</td>
+                        <td>[[ dateData.dates.outset ]]</td>
+                        <td v-for="price in dateData.prices">
+                            [[ price.price ? price.price : '-' ]]
+                        </td>
+                        <td>[[dateData.infos.number]]</td>
+                        <td>[[dateData.infos.remark]]</td>
+                      </tr>
+            `,
+            methods: {
+                dateEdit() {
+                    this.$emit('edit', this.dateData.id);
+                },
+                dateDel() {
+                    this.$emit('del', this.dateData.id);
+                },
+            }
+        })
 
         let vm = new Vue({
             delimiters: ['[[', ']]'],
             el: "#app",
             data: {
-                scheduleEditing:'',
+                scheduleEditing: '',
                 schedulesList: [],
+                dateEditing: '',
+                dateList: [],
             },
             mounted() {
                 CKEDITOR.replace('itemInfo');
@@ -401,34 +549,65 @@
             },
             methods: {
                 scheduleEditHandler(id) {
-                    //填入待編輯資廖
-                    this.scheduleEditing = this.schedulesList.filter((scheduleDay) => scheduleDay.day == id )[0]
+                    //填入待編輯資料
+                    this.scheduleEditing = this.schedulesList.filter((scheduleDay) => scheduleDay.day == id)[0]
                     //開啟編輯視窗
                     $('.scheduleModal').modal('toggle');
                 },
                 scheduleDelHandler(id) {
-                    this.schedulesList = this.schedulesList.filter((scheduleDay) => scheduleDay.day != id )
+                    this.schedulesList = this.schedulesList.filter((scheduleDay) => scheduleDay.day != id)
                 },
                 scheduleAddHandler(data) {
-                    if(data.day){
+                    if (data.day) {
                         //此為編輯
                         this.schedulesList.forEach((scheduleDay) => {
-                            if(scheduleDay.day == data.day){
+                            if (scheduleDay.day == data.day) {
                                 scheduleDay.dayScheduleList = data.dayScheduleList
                                 scheduleDay.dayRemark = data.dayRemark
                                 scheduleDay.dayDining = data.dayDining
                             }
                         })
-                    }
-                    else {
+                    } else {
                         //此為新增
-                       this.schedulesList.push(data)
+                        this.schedulesList.push(data)
                     }
                     //清空編輯資料
                     this.scheduleEditing = ''
                 },
+                dateEditHandler(id) {
+                    //填入待編輯資料
+                    this.dateEditing = this.dateList.filter((date) => date.id == id)[0]
+                    //開啟編輯視窗
+                    $('.dateModal').modal('toggle');
+                },
+                dateDelHandler(id) {
+                    this.dateList = this.dateList.filter((date) => date.id != id)
+                },
+                dateAddHandler(data) {
+                    if (data.id) {
+                        //此為編輯
+                        this.dateList.forEach((date) => {
+                            if (data.id == date.id) {
+                                date.dates = data.dates
+                                date.infos = data.infos
+                                date.prices = data.prices
+                            }
+                        })
+                    } else {
+                        //此為新增
+                        this.dateList.push(data)
+                    }
+                    //清空編輯資料
+                    this.dateEditing = ''
+                },
             },
             watch: {
+                //填入數值當id
+                dateList() {
+                    this.dateList.forEach((date, index) => {
+                        date.id = index + 1;
+                    })
+                },
                 //填入此行程天數並當成id
                 schedulesList() {
                     this.schedulesList.forEach((scheduleDay, index) => {
