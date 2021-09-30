@@ -4,7 +4,6 @@
 {% load tour_tag %}
 {% block main_body %}
     {% include "cms/cms_bar.html" %}
-
     <section id="app">
         <div class="container">
             <form>
@@ -48,29 +47,27 @@
                 <h3>行程組件</h3>
                 <div id="daysBox">
                     <schedule-day-component v-for="schedule in schedulesList"
+                                            :day="schedule.day"
                                             :day-dining="schedule.dayDining"
                                             :day-remark="schedule.dayRemark"
                                             :day-schedule-list="schedule.dayScheduleList"
-                    >
+                                            @edit="scheduleEditHandler"
+                                            @del="scheduleDelHandler">
                     </schedule-day-component>
                 </div>
                 <!------------------------組件modal-------------------->
-                <div class="modal fade scheduleModal" tabindex="-1" role="dialog"
-                     aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-body">
-                            <div class="modal-content border-0" style="background-color: white;">
-                                <!-------------------------------------------表單內容--------------------------------------->
-                                <schedule-add-component @submit="scheduleHandler"></schedule-add-component>
-                            </div>
-                        </div>
-                    </div>
+                <div class="modal fade scheduleModal">
+                    <schedule-add-component
+                            :editing-data="scheduleEditing"
+                            @submit="scheduleAddHandler">
+
+                    </schedule-add-component>
                 </div>
-                <!------------------------組件modal end-------------------->
                 <div class="button button-3d button-rounded w-100 center" data-toggle="modal"
                      data-target=".scheduleModal"><i class="icon-map-marker2"></i>新增一天行程
                 </div>
                 <div class="line"></div>
+
                 <!----------------------------行程金額---------------------------->
                 <h3>出團日期與金額</h3>
                 <h4 class="mb-1"><span class="badge badge-pill badge-success">相關日期設定</span></h4>
@@ -167,24 +164,29 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js'></script>
     <script src="https://cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
     <script>
-        const scheduleOrgData =()=>{
+        const scheduleOrgData = () => {
             return {
-            dayScheduleList: [],
-            dayDining: {
-            breakfast: '敬請自理',
-                lunch: '敬請自理',
-                dinner: '敬請自理',
-                hotel: ''
-            },
-            dayRemark: '',
-        }};
+                day: '',
+                dayScheduleList: [],
+                dayDining: {
+                    breakfast: '敬請自理',
+                    lunch: '敬請自理',
+                    dinner: '敬請自理',
+                    hotel: ''
+                },
+                dayRemark: '',
+            }
+        };
         Vue.component("scheduleAddComponent", {
             delimiters: ['[[', ']]'],
             data() {
                 return scheduleOrgData();
             },
+            props:['editingData'],
             template: `
-            <div>
+            <div class="modal-dialog modal-lg">
+                        <div class="modal-body">
+                            <div class="modal-content border-0" style="background-color: white;">
                 <div class="modal-body">
                     <h3 class="mb-1"><span class="badge badge-pill badge-success">行程</span></h3>
                     <select class="form-control js-example-basic-single" name="state"
@@ -255,7 +257,9 @@
                         <i class="icon-ok"></i>確認
                     </button>
                 </div>
-            </div>
+                  </div>
+                        </div>
+                    </div>
           `,
             methods: {
                 scheduleAdd() {
@@ -263,8 +267,8 @@
                     let scheduleData = {
                         'id': schedule.id,
                         'name': schedule.text,
-                        'description':schedule.description,
-                        'banner':schedule.banner,
+                        'description': schedule.description,
+                        'banner': schedule.banner,
                         'show': true,
                     }
                     this.dayScheduleList.push(scheduleData);
@@ -281,19 +285,26 @@
                     this.scheduleClear();
                     $('.scheduleModal').modal('toggle');
                 },
+            },
+            watch:{
+                //如果有送入編輯之資料
+                editingData(){
+                    const data = this.editingData;
+                    Object.keys(data).forEach(k => this[k] = data[k]);
+                }
             }
         });
 
         Vue.component("scheduleDayComponent", {
             delimiters: ['[[', ']]'],
-            props: ['dayDining','dayRemark','dayScheduleList'],
+            props: ['day', 'dayDining', 'dayRemark', 'dayScheduleList'],
             data() {
                 return {};
             },
             template: `<div class="day-box section p-4">
                         <div class="day-title">
                             <div class="day-num">
-                                1
+                                [[ day ]]
                             </div>
                             <div class="day-trips">
                                 <span class="day-trip" v-for="daySchedule in dayScheduleList">[[ daySchedule.name]]</span>
@@ -321,7 +332,7 @@
                                 <div class="fancy-title title-bottom-border title-center">
                                     <h4><i class="icon-line-bell"></i>注意事項</h4>
                                 </div>
-                                [[dayRemark]]
+                                <pre>[[dayRemark]]</pre>
                             </div>
                             <div class="day-trip-dining">
                                 <div class="fancy-title title-bottom-border title-center">
@@ -362,10 +373,18 @@
                                         </div>
                                     </div>
                                 </div>
+                                <button type="button" class="button button-3d button-pink button-rounded" @click="scheduleDayEdit"><i class="icon-trash2"></i>編輯</button>
+                                <button type="button" class="button button-3d button-pink button-rounded" @click="scheduleDayDel"><i class="icon-trash2"></i>刪除</button>
                             </div>
                         </div>
                     </div>`,
             methods: {
+                scheduleDayEdit() {
+                    this.$emit('edit', this.day);
+                },
+                scheduleDayDel() {
+                    this.$emit('del', this.day);
+                }
             }
         });
 
@@ -373,18 +392,50 @@
             delimiters: ['[[', ']]'],
             el: "#app",
             data: {
-                schedulesList:[],
+                scheduleEditing:'',
+                schedulesList: [],
             },
             mounted() {
                 CKEDITOR.replace('itemInfo');
                 CKEDITOR.replace('itemRemark');
             },
             methods: {
-                scheduleHandler(data){
-                    this.schedulesList.push(data)
+                scheduleEditHandler(id) {
+                    //填入待編輯資廖
+                    this.scheduleEditing = this.schedulesList.filter((scheduleDay) => scheduleDay.day == id )[0]
+                    //開啟編輯視窗
+                    $('.scheduleModal').modal('toggle');
+                },
+                scheduleDelHandler(id) {
+                    this.schedulesList = this.schedulesList.filter((scheduleDay) => scheduleDay.day != id )
+                },
+                scheduleAddHandler(data) {
+                    if(data.day){
+                        //此為編輯
+                        this.schedulesList.forEach((scheduleDay) => {
+                            if(scheduleDay.day == data.day){
+                                scheduleDay.dayScheduleList = data.dayScheduleList
+                                scheduleDay.dayRemark = data.dayRemark
+                                scheduleDay.dayDining = data.dayDining
+                            }
+                        })
+                    }
+                    else {
+                        //此為新增
+                       this.schedulesList.push(data)
+                    }
+                    //清空編輯資料
+                    this.scheduleEditing = ''
                 },
             },
-            computed: {}
+            watch: {
+                //填入此行程天數並當成id
+                schedulesList() {
+                    this.schedulesList.forEach((scheduleDay, index) => {
+                        scheduleDay.day = index + 1;
+                    })
+                }
+            }
         });
     </script>
 
