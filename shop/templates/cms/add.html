@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load cropping %}
 {% load tour_tag %}
+
 {% block main_body %}
     {% include "cms/cms_bar.html" %}
     <section id="app">
@@ -60,7 +61,6 @@
                     <schedule-add-component
                             :editing-data="scheduleEditing"
                             @submit="scheduleAddHandler">
-
                     </schedule-add-component>
                 </div>
                 <div class="button button-3d button-rounded w-100 center" data-toggle="modal"
@@ -117,17 +117,7 @@
                 <div class="line"></div>
 
                 <!----------------------------送出---------------------------->
-                <h3>訂單訂金設定</h3>
-                <div class="form-group row">
-                    <label for="itemPriceDeposit" class="col col-form-label">應付訂金占比(%)</label>
-                    <div class="col">
-                        <select class="form-control" id="itemPriceDeposit">
-                            <option>10%</option>
-                            <option>20%</option>
-                            <option>30%</option>
-                        </select>
-                    </div>
-                </div>
+
             </form>
         </div>
     </section>
@@ -137,7 +127,8 @@
         var data = {{  tourComponentList |safe  }}
             $(document).ready(function () {
                 $('.js-example-basic-single').select2({
-                    tags: true,
+                    width: '80%',
+                    tags: false,
                     tokenSeparators: [',', ' '],
                     data: data,
                     val: null,
@@ -146,6 +137,252 @@
     </script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js'></script>
     <script src="https://cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
+    <!--Vue Component-->
+    <script type="text/x-template" id="dateAddComponentHtml">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-body">
+                <div class="modal-content border-0" style="background-color: white;">
+                    <div class="modal-body">
+                        <h4 class="mb-1"><span class="badge badge-pill badge-success">相關日期設定</span></h4>
+                        <div class="form-group row">
+                            <label for="openDate" class="col col-form-label">上架日期</label>
+                            <div class="col">
+                                <input type="date" class="form-control" id="openDate" v-model="dateData.dates.open">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="closeDate" class="col col-form-label">截止日期</label>
+                            <div class="col">
+                                <input type="date" class="form-control" id="closeDate" v-model="dateData.dates.close">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="outsetDate" class="col col-form-label">出團日期</label>
+                            <div class="col">
+                                <input type="date" class="form-control" id="outsetDate" v-model="dateData.dates.outset">
+                            </div>
+                        </div>
+                        <h4 class="mb-1"><span class="badge badge-pill badge-success">房型金額設定</span></h4>
+                        <div class="form-group row" v-for="priceSet in dateData.prices">
+                            <label :for="priceSet.name" class="col col-form-label">[[priceSet.name]]</label>
+                            <div class="col">
+                                <input type="number" class="form-control" :id="priceSet.name"
+                                       placeholder="請填寫金額，如未有此房型請留空。" v-model="priceSet.price">
+                            </div>
+                        </div>
+                        <h4 class="mb-1"><span class="badge badge-pill badge-success">其他設定</span></h4>
+                        <div class="form-group row">
+                            <label for="outsetDate" class="col col-form-label">人數上限</label>
+                            <div class="col">
+                                <input type="number" class="form-control" id="outsetDate"
+                                       v-model="dateData.infos.number">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="outsetDate" class="col col-form-label">出團備註</label>
+                            <div class="col">
+                                <input type="text" class="form-control" id="outsetDate" v-model="dateData.infos.remark">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top-0">
+                        <button type="button" class="button button-3d button-pink button-rounded" data-dismiss="modal"
+                                aria-hidden="true">
+                            <i class="icon-trash2"></i>取消
+                        </button>
+                        <button type="button" class="button button-3d button-amber button-rounded" @click="dateClear">
+                            <i class="icon-trash2"></i>清除
+                        </button>
+                        <button type="button" class="button button-3d button-rounded" @click="dateSubmit">
+                            <i class="icon-ok"></i>確認
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/x-template" id="dateComponentHtml">
+        <tr>
+            <td class="p-0">
+                <button type="button" class="button button-mini button-circle button-amber" @click="dateEdit">編輯
+                </button>
+            </td>
+            <td class="p-0">
+                <button type="button" class="button button-mini button-circle button-pink" @click="dateDel">刪除</button>
+            </td>
+            <td>[[ dateData.dates.open ]]</td>
+            <td>[[ dateData.dates.close ]]</td>
+            <td>[[ dateData.dates.outset ]]</td>
+            <td v-for="price in dateData.prices">
+                [[ price.price ? price.price : '-' ]]
+            </td>
+            <td>[[dateData.infos.number]]</td>
+            <td>[[dateData.infos.remark]]</td>
+        </tr>
+    </script>
+    <script type="text/x-template" id="scheduleAddComponentHtml">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-body">
+                <div class="modal-content border-0" style="background-color: white;">
+                    <div class="modal-body">
+                        <h3 class="mb-1"><span class="badge badge-pill badge-success">行程</span></h3>
+                        <select class="form-control js-example-basic-single" name="state"
+                                id="scheduleSearch"></select>
+                        <button class="btn btn-secondary col-sm-2" type="button" @click="scheduleAdd">
+                            加入
+                        </button>
+                        <div class="alert alert-info mb-1" v-for="(daySchedule,index) in dayScheduleList">
+                            <input :id="index" class="radio-style" name="radio-group-3" type="checkbox"
+                                   v-model="daySchedule.show">
+                            <label :for="index" class="radio-style-3-label" style="color:white">[[
+                                daySchedule.name ]]</label>
+                            <button type="button" class="close" @click="scheduleDel(index)">x
+                            </button>
+                        </div>
+                        <h3 class="mb-1"><span class="badge badge-pill badge-success">備註</span></h3>
+                        <div class="form-group row">
+                            <label for="dayRemark" class="col-sm-2 col-form-label">備註</label>
+                            <div class="col-sm-10">
+                            <textarea v-model="dayRemark" class="form-control" rows="4" id="dayRemark"
+                                      placeholder="08:00～08:10 台北車站南一門集合出發、帶著愉快的心情開啟宜花之旅
+10:00~11:00 台泥DAKA
+12:00~16:00 太魯閣國家公園
+17:30 飯店CHECK IN
+（途中將依實際狀況調整景點停留時間）"></textarea>
+                            </div>
+                        </div>
+                        <h3 class="mb-1"><span class="badge badge-pill badge-success">用餐</span></h3>
+
+                        <div class="form-group row">
+                            <label for="dayBreakfast" class="col-sm-2 col-form-label">早餐</label>
+                            <div class="col-sm-10">
+                                <input v-model="dayDining.breakfast" type="text" class="form-control"
+                                       id="dayBreakfast">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="dayLunch" class="col-sm-2 col-form-label">中餐</label>
+                            <div class="col-sm-10">
+                                <input v-model="dayDining.lunch" type="text" class="form-control"
+                                       id="dayLunch">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="dayDinner" class="col-sm-2 col-form-label">晚餐</label>
+                            <div class="col-sm-10">
+                                <input v-model="dayDining.dinner" type="text" class="form-control"
+                                       id="dayDinner">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="dayHotel" class="col-sm-2 col-form-label">住宿</label>
+                            <div class="col-sm-10">
+                                <input v-model="dayDining.hotel" type="text" class="form-control"
+                                       id="dayHotel"
+                                       placeholder="松風文旅／煙波大飯店宜蘭館／ 或同級">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top-0">
+                        <button type="button" class="button button-3d button-pink button-rounded" data-dismiss="modal"
+                                aria-hidden="true">
+                            <i class="icon-trash2"></i>取消
+                        </button>
+                        <button type="button" class="button button-3d button-amber button-rounded"
+                                @click="scheduleClear">
+                            <i class="icon-trash2"></i>清除
+                        </button>
+                        <button type="button" class="button button-3d button-rounded" @click="scheduleSubmit">
+                            <i class="icon-ok"></i>確認
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/x-template" id="scheduleDayComponentHtml">
+        <div class="day-box section p-4">
+            <div class="day-title">
+                <div class="day-num">
+                    [[ day ]]
+                </div>
+                <div class="day-trips">
+                    <span class="day-trip" v-for="daySchedule in dayScheduleList">[[ daySchedule.name]]</span>
+                </div>
+            </div>
+            <template v-for="daySchedule in dayScheduleList">
+                <div class="day-body" v-if="daySchedule.show">
+                    <div class="day-trip">
+                        <div class="day-trip-img">
+                            <img :src="daySchedule.banner" class="img-fluid w-100">
+                        </div>
+                        <div class="day-trip-info">
+                            <div class="title">
+                                [[ daySchedule.name ]]
+                            </div>
+                            <div class="content">
+                                [[ daySchedule.description ]]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <div class="day-footer">
+                <div class="day-trip-notice" v-if="dayRemark">
+                    <div class="fancy-title title-bottom-border title-center">
+                        <h4><i class="icon-line-bell"></i>注意事項</h4>
+                    </div>
+                    <pre>[[dayRemark]]</pre>
+                </div>
+                <div class="day-trip-dining">
+                    <div class="fancy-title title-bottom-border title-center">
+                        <h4><i class="icon-food2"></i>住宿與用餐</h4>
+                    </div>
+                    <div class="dining-boxs">
+                        <div class="dining-box">
+                            <div class="dining-title">
+                                <i class="fas fa-hamburger fa-fw" aria-hidden="true"></i>早餐：
+                            </div>
+                            <div class="dining-content">
+                                [[dayDining.breakfast]]
+                            </div>
+                        </div>
+
+                        <div class="dining-box">
+                            <div class="dining-title">
+                                <i class="fas fa-utensils fa-fw" aria-hidden="true"></i>中餐：
+                            </div>
+                            <div class="dining-content">
+                                [[dayDining.lunch]]
+                            </div>
+                        </div>
+                        <div class="dining-box">
+                            <div class="dining-title">
+                                <i class="fas fa-wine-glass-alt fa-fw" aria-hidden="true"></i>晚餐：
+                            </div>
+                            <div class="dining-content">
+                                [[dayDining.dinner]]
+                            </div>
+                        </div>
+                        <div class="dining-box">
+                            <div class="dining-title">
+                                <i class="fas fa-bed fa-fw" aria-hidden="true"></i>住宿：
+                            </div>
+                            <div class="dining-content">
+                                [[dayDining.hotel]]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="inline-button button button-mini button-circle button-amber w-25 mt-2"
+                        @click="scheduleDayEdit">編輯
+                </button>
+                <button type="button" class="inline-button button button-mini button-circle button-pink w-25"
+                        @click="scheduleDayDel">刪除
+                </button>
+            </div>
+        </div>
+    </script>
     <script>
         const scheduleOrgData = () => {
             return {
@@ -160,90 +397,13 @@
                 dayRemark: '',
             }
         };
-        Vue.component("scheduleAddComponent", {
+        var scheduleAddComponent = {
             delimiters: ['[[', ']]'],
             data() {
                 return scheduleOrgData();
             },
             props: ['editingData'],
-            template: `
-            <div class="modal-dialog modal-lg">
-                        <div class="modal-body">
-                            <div class="modal-content border-0" style="background-color: white;">
-                <div class="modal-body">
-                    <h3 class="mb-1"><span class="badge badge-pill badge-success">行程</span></h3>
-                    <select class="form-control js-example-basic-single" name="state"
-                            id="scheduleSearch"></select>
-                    <button class="btn btn-secondary col-sm-2" type="button" @click="scheduleAdd">
-                        加入
-                    </button>
-                    <div class="alert alert-info mb-1" v-for="(daySchedule,index) in dayScheduleList">
-                        <input :id="index" class="radio-style" name="radio-group-3" type="checkbox"
-                               v-model="daySchedule.show">
-                        <label :for="index" class="radio-style-3-label" style="color:white">[[
-                            daySchedule.name ]]</label>
-                        <button type="button" class="close" @click="scheduleDel(index)">x
-                        </button>
-                    </div>
-                    <h3 class="mb-1"><span class="badge badge-pill badge-success">備註</span></h3>
-                    <div class="form-group row">
-                        <label for="dayRemark" class="col-sm-2 col-form-label">備註</label>
-                        <div class="col-sm-10">
-                            <textarea v-model="dayRemark" class="form-control" rows="4" id="dayRemark"
-                                      placeholder="08:00～08:10 台北車站南一門集合出發、帶著愉快的心情開啟宜花之旅
-10:00~11:00 台泥DAKA
-12:00~16:00 太魯閣國家公園
-17:30 飯店CHECK IN
-（途中將依實際狀況調整景點停留時間）"></textarea>
-                        </div>
-                    </div>
-                    <h3 class="mb-1"><span class="badge badge-pill badge-success">用餐</span></h3>
-
-                    <div class="form-group row">
-                        <label for="dayBreakfast" class="col-sm-2 col-form-label">早餐</label>
-                        <div class="col-sm-10">
-                            <input v-model="dayDining.breakfast" type="text" class="form-control"
-                                   id="dayBreakfast">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="dayLunch" class="col-sm-2 col-form-label">中餐</label>
-                        <div class="col-sm-10">
-                            <input v-model="dayDining.lunch" type="text" class="form-control"
-                                   id="dayLunch">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="dayDinner" class="col-sm-2 col-form-label">晚餐</label>
-                        <div class="col-sm-10">
-                            <input v-model="dayDining.dinner" type="text" class="form-control"
-                                   id="dayDinner">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="dayHotel" class="col-sm-2 col-form-label">住宿</label>
-                        <div class="col-sm-10">
-                            <input v-model="dayDining.hotel" type="text" class="form-control"
-                                   id="dayHotel"
-                                   placeholder="松風文旅／煙波大飯店宜蘭館／ 或同級">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer border-top-0">
-                    <button type="button" class="button button-3d button-pink button-rounded"data-dismiss="modal" aria-hidden="true">
-                        <i class="icon-trash2"></i>取消
-                    </button>
-                    <button type="button" class="button button-3d button-amber button-rounded"@click="scheduleClear">
-                        <i class="icon-trash2"></i>清除
-                    </button>
-                    <button type="button" class="button button-3d button-rounded" @click="scheduleSubmit">
-                        <i class="icon-ok"></i>確認
-                    </button>
-                </div>
-                  </div>
-                        </div>
-                    </div>
-          `,
+            template: `#scheduleAddComponentHtml`,
             methods: {
                 scheduleAdd() {
                     let schedule = $('#scheduleSearch').select2('data')[0];
@@ -276,91 +436,15 @@
                     Object.keys(data).forEach(k => this[k] = data[k]);
                 }
             }
-        });
+        }
 
-        Vue.component("scheduleDayComponent", {
+        var scheduleDayComponent = {
             delimiters: ['[[', ']]'],
             props: ['day', 'dayDining', 'dayRemark', 'dayScheduleList'],
             data() {
                 return {};
             },
-            template: `<div class="day-box section p-4">
-                        <div class="day-title">
-                            <div class="day-num">
-                                [[ day ]]
-                            </div>
-                            <div class="day-trips">
-                                <span class="day-trip" v-for="daySchedule in dayScheduleList">[[ daySchedule.name]]</span>
-                            </div>
-                        </div>
-                        <template v-for="daySchedule in dayScheduleList">
-                            <div class="day-body" v-if="daySchedule.show">
-                                <div class="day-trip">
-                                    <div class="day-trip-img">
-                                        <img :src="daySchedule.banner" class="img-fluid w-100">
-                                    </div>
-                                    <div class="day-trip-info">
-                                        <div class="title">
-                                            [[ daySchedule.name ]]
-                                        </div>
-                                        <div class="content">
-                                           [[ daySchedule.description ]]
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </template>
-                        <div class="day-footer">
-                            <div class="day-trip-notice" v-if="dayRemark">
-                                <div class="fancy-title title-bottom-border title-center">
-                                    <h4><i class="icon-line-bell"></i>注意事項</h4>
-                                </div>
-                                <pre>[[dayRemark]]</pre>
-                            </div>
-                            <div class="day-trip-dining">
-                                <div class="fancy-title title-bottom-border title-center">
-                                    <h4><i class="icon-food2"></i>住宿與用餐</h4>
-                                </div>
-                                <div class="dining-boxs">
-                                    <div class="dining-box">
-                                        <div class="dining-title">
-                                            <i class="fas fa-hamburger fa-fw" aria-hidden="true"></i>早餐：
-                                        </div>
-                                        <div class="dining-content">
-                                            [[dayDining.breakfast]]
-                                        </div>
-                                    </div>
-
-                                    <div class="dining-box">
-                                        <div class="dining-title">
-                                            <i class="fas fa-utensils fa-fw" aria-hidden="true"></i>中餐：
-                                        </div>
-                                        <div class="dining-content">
-                                            [[dayDining.lunch]]
-                                        </div>
-                                    </div>
-                                    <div class="dining-box">
-                                        <div class="dining-title">
-                                            <i class="fas fa-wine-glass-alt fa-fw" aria-hidden="true"></i>晚餐：
-                                        </div>
-                                        <div class="dining-content">
-                                            [[dayDining.dinner]]
-                                        </div>
-                                    </div>
-                                    <div class="dining-box">
-                                        <div class="dining-title">
-                                            <i class="fas fa-bed fa-fw" aria-hidden="true"></i>住宿：
-                                        </div>
-                                        <div class="dining-content">
-                                            [[dayDining.hotel]]
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="button"  class="inline-button button button-mini button-circle button-amber w-25 mt-2"  @click="scheduleDayEdit">編輯</button>
-                            <button type="button"  class="inline-button button button-mini button-circle button-pink w-25"   @click="scheduleDayDel">刪除</button>
-                        </div>
-                    </div>`,
+            template: `#scheduleDayComponentHtml`,
             methods: {
                 scheduleDayEdit() {
                     this.$emit('edit', this.day);
@@ -369,7 +453,9 @@
                     this.$emit('del', this.day);
                 }
             }
-        });
+        }
+    </script>
+    <script>
         const dateOrgData = () => {
             return {
                 dateData: {
@@ -415,72 +501,13 @@
                 }
             };
         };
-        Vue.component("dateAddComponent", {
+        var dateAddComponent = {
             delimiters: ['[[', ']]'],
             data() {
                 return dateOrgData();
             },
             props: ['editingData'],
-            template: `
-             <div class="modal-dialog modal-lg">
-                <div class="modal-body">
-                    <div class="modal-content border-0" style="background-color: white;">
-                        <div class="modal-body">
-                            <h4 class="mb-1"><span class="badge badge-pill badge-success">相關日期設定</span></h4>
-                               <div class="form-group row">
-                                   <label for="openDate" class="col col-form-label">上架日期</label>
-                                   <div class="col">
-                                       <input type="date" class="form-control" id="openDate" v-model="dateData.dates.open" >
-                                   </div>
-                               </div>
-                               <div class="form-group row">
-                                   <label for="closeDate" class="col col-form-label">截止日期</label>
-                                   <div class="col">
-                                       <input type="date" class="form-control" id="closeDate" v-model="dateData.dates.close">
-                                   </div>
-                               </div>
-                               <div class="form-group row">
-                                   <label for="outsetDate" class="col col-form-label">出團日期</label>
-                                   <div class="col">
-                                       <input type="date" class="form-control" id="outsetDate" v-model="dateData.dates.outset">
-                                   </div>
-                               </div>
-                               <h4 class="mb-1"><span class="badge badge-pill badge-success">房型金額設定</span></h4>
-                               <div class="form-group row" v-for="priceSet in dateData.prices">
-                                   <label :for="priceSet.name" class="col col-form-label">[[priceSet.name]]</label>
-                                   <div class="col">
-                                       <input type="number" class="form-control" :id="priceSet.name" placeholder="請填寫金額，如未有此房型請留空。" v-model="priceSet.price">
-                                   </div>
-                               </div>
-                               <h4 class="mb-1"><span class="badge badge-pill badge-success">其他設定</span></h4>
-                               <div class="form-group row">
-                                   <label for="outsetDate" class="col col-form-label">人數上限</label>
-                                   <div class="col">
-                                       <input type="number" class="form-control" id="outsetDate" v-model="dateData.infos.number">
-                                   </div>
-                               </div>
-                               <div class="form-group row">
-                                   <label for="outsetDate" class="col col-form-label">出團備註</label>
-                                   <div class="col">
-                                       <input type="text" class="form-control" id="outsetDate" v-model="dateData.infos.remark">
-                                   </div>
-                               </div>
-                            </div>
-                        <div class="modal-footer border-top-0">
-                            <button type="button" class="button button-3d button-pink button-rounded"data-dismiss="modal" aria-hidden="true">
-                                <i class="icon-trash2"></i>取消
-                            </button>
-                            <button type="button" class="button button-3d button-amber button-rounded"@click="dateClear">
-                                <i class="icon-trash2"></i>清除
-                            </button>
-                            <button type="button" class="button button-3d button-rounded" @click="dateSubmit">
-                                <i class="icon-ok"></i>確認
-                            </button>
-                        </div>
-                    </div>
-                </div>
-             </div>
-             `,
+            template: `#dateAddComponentHtml`,
             methods: {
                 dateClear() {
                     const data = dateOrgData();
@@ -499,31 +526,15 @@
                     Object.keys(data).forEach(k => this.dateData[k] = data[k]);
                 }
             }
-        })
+        }
 
-        Vue.component("dateComponent", {
+        var dateComponent = {
             delimiters: ['[[', ']]'],
             data() {
                 return {}
             },
             props: ['dateData'],
-            template: `<tr>
-                        <td class="p-0">
-                            <button type="button"  class="button button-mini button-circle button-amber"  @click="dateEdit">編輯</button>
-                        </td>
-                        <td class="p-0">
-                            <button type="button"  class="button button-mini button-circle button-pink"   @click="dateDel">刪除</button>
-                        </td>
-                        <td>[[ dateData.dates.open ]]</td>
-                        <td>[[ dateData.dates.close ]]</td>
-                        <td>[[ dateData.dates.outset ]]</td>
-                        <td v-for="price in dateData.prices">
-                            [[ price.price ? price.price : '-' ]]
-                        </td>
-                        <td>[[dateData.infos.number]]</td>
-                        <td>[[dateData.infos.remark]]</td>
-                      </tr>
-            `,
+            template: `#dateComponentHtml`,
             methods: {
                 dateEdit() {
                     this.$emit('edit', this.dateData.id);
@@ -532,8 +543,10 @@
                     this.$emit('del', this.dateData.id);
                 },
             }
-        })
-
+        }
+    </script>
+    <!--Vue Main-->
+    <script>
         let vm = new Vue({
             delimiters: ['[[', ']]'],
             el: "#app",
@@ -542,6 +555,12 @@
                 schedulesList: [],
                 dateEditing: '',
                 dateList: [],
+            },
+            components: {
+                "schedule-add-component": scheduleAddComponent,
+                "schedule-day-component": scheduleDayComponent,
+                "date-add-component": dateAddComponent,
+                "date-component": dateComponent,
             },
             mounted() {
                 CKEDITOR.replace('itemInfo');
