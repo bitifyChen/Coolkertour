@@ -2,96 +2,174 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="zh-TW">
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<meta name="author" content="SemiColonWeb" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="author" content="SemiColonWeb"/>
 
-	<!-- Stylesheets
-	============================================= -->
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Raleway:300,400,500,600,700|Crete+Round:400i" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
-	<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
-	<link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}" />
-	<link rel="stylesheet" type="text/css" href="{% static 'css/font-icons.css' %}" />
-	<link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}" />
-	<link rel="stylesheet" type="text/css" href="{% static 'css/magnific-popup.css' %}" />
+    <!-- Stylesheets
+    ============================================= -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Raleway:300,400,500,600,700|Crete+Round:400i"
+          rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-icons.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/magnific-popup.css' %}"/>
 
-	<link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-	<!-- Document Title
-	============================================= -->
-	<title>CoolkerTour | 酷客旅遊</title>
+    <!-- Document Title
+    ============================================= -->
+    <title>CoolkerTour | 酷客旅遊</title>
+    <style>
+        .loginBtn{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 30vh !important;
+            max-height:300px !important;
+            width:100%;
+        }
+        .loginBtn i{
 
+        }
+        .loginBtn h2{
+            margin-top: auto;
+        }
+    </style>
 </head>
 
 <body class="stretched">
 
-	<!-- Document Wrapper
-	============================================= -->
-	<div id="wrapper" class="clearfix">
+<!-- Document Wrapper
+============================================= -->
+<div id="wrapper" class="clearfix">
 
-		<!-- Content
-		============================================= -->
-		<section id="content">
+    <!-- Content
+    ============================================= -->
+    <section id="content">
 
-			<div class="content-wrap nopadding">
+        <div class="content-wrap nopadding">
 
-				<div class="section nopadding nomargin" style="width: 100%; height: 100%; position: absolute; left: 0; top: 0; background: url({% static 'photo/slider/bg-1.jpg' %}) center center no-repeat; background-size: cover;"></div>
+            <div class="section nopadding nomargin"
+                 style="width: 100%; height: 100%; position: absolute; left: 0; top: 0; background: url({% static 'photo/slider/bg-1.jpg' %}) center center no-repeat; background-size: cover;"></div>
 
-				<div class="section nobg full-screen nopadding nomargin">
-					<div class="container-fluid vertical-middle divcenter clearfix">
+            <div class="section nobg full-screen nopadding nomargin">
+                <div class="container-fluid vertical-middle divcenter clearfix">
 
-						<div class="card divcenter noradius noborder" style="max-width: 400px; background-color: rgba(255,255,255,0.93);">
-							<div class="card-body" style="padding: 40px;">
-								<form id="login-form" name="login-form" class="nobottommargin" action="#" method="post">
-                                    {% csrf_token %}
-									<h3>酷客相片上傳系統</h3>
+                    <div class="card divcenter noradius noborder"
+                         style="max-width: 800px; background-color: rgba(255,255,255,0.93);">
+                        <div class="card-body" style="padding: 40px; ">
+                            <div id="mainMode">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <button href="#" class="button button-desc loginBtn" id="userCompany">
+                                            <div>企業登入</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button href="#" class="button button-desc loginBtn" id="userPersonal">
+                                            <div>會員登入</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="line line-sm"></div>
+                                <a href="{% url 'index' %}" class="button button-border button-circle button-dark">回酷客首頁</a>
+                            </div>
+                            <div id="userMode" style="display:none">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <button onclick="displayMode('main')" class="button button-border button-circle button-dark"> 回上一步</button>
+                                        <button onclick="displayMode('main')" class="button button-border button-circle button-dark"> 會員註冊</button>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <form id="login-form" name="login-form" class="nobottommargin" action="#"
+                                              method="post">
+                                            {% csrf_token %}
+                                            <h3>登入</h3>
 
-									<div class="col_full">
-										<label for="login-form-username">帳號:</label>
-{#										<input type="text" id="login-form-username" name="login-form-username" value="" class="form-control not-dark" />#}
-                                        {{ post_form.username }}
-									</div>
+                                            <div class="col_full">
+                                                <label for="login-form-username">帳號:</label>
+                                                {{ post_form.username }}
+                                            </div>
 
-									<div class="col_full">
-										<label for="login-form-password">密碼:</label>
-										{{ post_form.password }}
-									</div>
+                                            <div class="col_full">
+                                                <label for="login-form-password">密碼:</label>
+                                                {{ post_form.password }}
+                                            </div>
 
-									<div class="col_full nobottommargin">
-										<button class="button button-3d button-black nomargin" id="login-form-submit" name="login-form-submit" value="login">登入</button>
-									</div>
-								</form>
+                                            <div class="col_full nobottommargin">
+                                                <button class="button button-3d button-black nomargin"
+                                                        id="login-form-submit" name="login-form-submit" value="login">登入
+                                                </button>
+                                            </div>
+                                            <div class="line line-sm"></div>
 
-								<div class="line line-sm"></div>
-                                <a href="{% url 'admin:index' %}" class="fleft">前往後台</a>
-							</div>
-						</div>
-						<div class="center dark"><small>Copyrights &copy; All Rights Reserved by Coolkertour酷客旅遊.</small></div>
-					</div>
-				</div>
-			</div>
-		</section><!-- #content end -->
-	</div><!-- #wrapper end -->
-	<!-- Go To Top
-	============================================= -->
-	<div id="gotoTop" class="icon-angle-up"></div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="line line-sm"></div>
 
-	<!-- External JavaScripts
-	============================================= -->
-	<script src="{% static 'js/jquery.js' %}"></script>
-	<script src="{% static 'js/plugins.js' %}"></script>
+                                <a href="{% url 'index' %}" class="button button-border button-circle button-dark">回酷客首頁</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="center dark"><small>Copyrights &copy; All Rights Reserved by Coolkertour酷客旅遊.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- #content end -->
+</div><!-- #wrapper end -->
+<!-- Go To Top
+============================================= -->
+<div id="gotoTop" class="icon-angle-up"></div>
 
-	<!-- Footer Scripts
-	============================================= -->
-	<script src="{% static 'js/functions.js' %}"></script>
-    <script src="{% static "js/noty/packaged/jquery.noty.packaged.js" %}"></script>
-    <script>
-        {% if messages %}
-            {% for message in messages %}
-                noty({theme: 'relax',type:'{{ message.tags }}',text: '{{ message }}', timeout: 5000});
-            {% endfor %}
-        {% endif %}
-    </script>
+<!-- External JavaScripts
+============================================= -->
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/plugins.js' %}"></script>
+
+<!-- Footer Scripts
+============================================= -->
+<script src="{% static 'js/functions.js' %}"></script>
+<script src="{% static "js/noty/packaged/jquery.noty.packaged.js" %}"></script>
+
+<!-- Main Scripts
+============================================= -->
+<script>
+    const mainMode = document.querySelector('#mainMode');
+    const userMode = document.querySelector('#userMode');
+    const btnCompany = document.querySelector('#userCompany');
+    const btnPersonal = document.querySelector('#userPersonal');
+
+    btnCompany.addEventListener('click', () => {
+        window.location.href ="http://cooltour.com.tw/Login.aspx";
+    })
+
+    btnPersonal.addEventListener('click', () => {
+        displayMode('user')
+    })
+
+    function displayMode(name) {
+        if (name === 'main') {
+            mainMode.style.display = 'block';
+            userMode.style.display = 'none';
+        } else if (name === 'user') {
+            mainMode.style.display = 'none';
+            userMode.style.display = 'block';
+        }
+    }
+</script>
+
+<script>
+    {% if messages %}
+        {% for message in messages %}
+            noty({theme: 'relax', type: '{{ message.tags }}', text: '{{ message }}', timeout: 3000});
+        {% endfor %}
+    {% endif %}
+</script>
 </body>
 </html>

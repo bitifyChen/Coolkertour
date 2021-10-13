@@ -244,9 +244,14 @@
                         <li><a href="{% url 'index' %}#section-contact">
                             <div>找到酷客</div>
                         </a></li>
-                        <li><a href="http://cooltour.com.tw/Login.aspx">
-                            <div>企業登入</div>
+                        {% if request.user.is_authenticated %}
+                            <li><a href="{% url 'logout' %}">登出</a></li>
+                        {% else %}
+                            <li><a href="{% url 'login' %}">
+                            <div>會員/企業登入</div>
                         </a></li>
+                        {% endif %}
+
                     </ul>
                 </nav><!-- #primary-menu end -->
             </div>
